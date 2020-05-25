@@ -1,2 +1,3 @@
-# HappyPlaceMC
-Articles for HappyPlaceMC spigot server at my.happyplacemc.com
+# Happy Place MC
+Articles for Happy Place MC spigot server at my.happyplacemc.com.
+

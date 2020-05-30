@@ -275,20 +275,26 @@
     .hero-images-container{
         max-width: 670px;
     }
-
-    .hero-images-container-1{
+    .hero-images-container{
         max-width: 390px;
         position: absolute;
         top: 55%;
-        right: 18%;
+        left: 10%;
+
+    }
+    .hero-images-container-1{
+        max-width: 390px;
+        position: absolute;
+        top: 88px;
+        right: 44%;
 
     }
 
     .hero-images-container-2{
-        max-width: 225px;
+        max-width: 240px;
         position: absolute;
-        top: 68%;
-        right: 12%;
+        top: -44px;
+        right: 18%;
     }
 }
 

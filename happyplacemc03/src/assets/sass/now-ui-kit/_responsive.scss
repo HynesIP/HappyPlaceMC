@@ -91,14 +91,14 @@
         }
 
         .hero-images-container-1{
-            right: 10%;
-            top: 68%;
+            right: 29%;
+            top: 88px;
             max-width: 269px;
         }
 
         .hero-images-container-2{
-            right: 5%;
-            max-width: 135px;
+            right: 0%;
+            max-width: 244px;
             top: 93%;
         }
     }
@@ -295,13 +295,13 @@
 @media screen and (min-width: 991px) and (max-width: 1200px){
     .section-images{
         .hero-images-container-1{
-            right: 9%;
+            right: 29%;
             max-width: 370px;
         }
 
         .hero-images-container-2{
-            right: 2%;
-            max-width: 216px;
+            right: 0%;
+            max-width: 244px;
         }
     }
 }
@@ -314,11 +314,14 @@
         .hero-images-container{
             max-width: 380px;
         }
+        .hero-images-container{
+            max-width: 133px;
+        }
 
         .hero-images-container-1{
-            right: 7%;
+            right: 29%;
             top: 87%;
-            max-width: 210px;
+            max-width: 133px;
         }
 
         .hero-images-container-2{
@@ -338,8 +341,8 @@
 @media screen and (min-width: 1200px) {
     .section-images{
         .hero-images-container-1{
-            top: 51%;
-            right: 21%;
+            top: 88px;
+            right: 37%;
         }
 
         .hero-images-container-2{
@@ -371,7 +374,7 @@ and ( orientation : portrait){
     }
 
     .section-images .hero-images-container-2{
-        right: 21%;
+        right: 6%;
         top: 55%;
     }
 

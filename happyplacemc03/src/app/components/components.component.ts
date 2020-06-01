@@ -37,7 +37,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
     state_icon_primary = true;
 
    
-        public payPalConfig?: IPayPalConfig
+        public payPalConfig?: IPayPalConfig;
+        public payPalOrder?: ICreateOrderRequest;
 
     constructor( 
         private renderer : Renderer2, 
@@ -45,7 +46,6 @@ export class ComponentsComponent implements OnInit, OnDestroy {
         ) {
         config.closeOthers = true;
         config.type = 'info';
-
     }
  
 
@@ -76,12 +76,39 @@ export class ComponentsComponent implements OnInit, OnDestroy {
     showCancel: boolean;
     showError: boolean;
     resetStatus(){}
-
+/*
+<div id="paypal-button-container"></div>
+<script src="https://www.paypal.com/sdk/js?client-id=
+AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk
+&vault=true" data-sdk-integration-source="button-factory"></script>
+<script>
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe',
+          
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          'plan_id': 'P-3F474576VK828232PL3KT7MA'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID);
+      }
+  }).render('#paypal-button-container');
+</script>
+</script-->
+*/
     private initConfig(): void {
+
         this.payPalConfig = {
             currency: 'USD',
-            clientId: 'AWoynf1N8S6VZs8jiFTRfj6YYNtBpbr0tOhlaw_62GxFxCtWN24iYYW7dtPUHJfWJdVg4DQ-N-NKPuw8',
-            createOrderOnClient: (data) => < ICreateOrderRequest > {
+            //clientId: 'AWoynf1N8S6VZs8jiFTRfj6YYNtBpbr0tOhlaw_62GxFxCtWN24iYYW7dtPUHJfWJdVg4DQ-N-NKPuw8',
+            clientId: 'AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk',
+            /*createOrderOnClient: (data) => < ICreateOrderRequest > {
                 intent: 'CAPTURE',
                 purchase_units: [{
                     amount: {
@@ -104,7 +131,7 @@ export class ComponentsComponent implements OnInit, OnDestroy {
                         },
                     }]
                 }]
-            },
+            },*/
             advanced: {
                 commit: 'true'
             },
@@ -137,6 +164,9 @@ export class ComponentsComponent implements OnInit, OnDestroy {
                 this.resetStatus();
             }
         };
+
+        console.log(this.payPalOrder)
+        console.log(JSON.stringify(this.payPalConfig))
     }
 
 

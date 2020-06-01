@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { NucleoiconsComponent } from './nucleoicons/nucleoicons.component';
 import { ComponentsComponent } from './components.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NgbdModalBasic } from './modal/modal.component';
+import { NgxPayPalModule } from 'ngx-paypal';
 
 @NgModule({
     imports: [
@@ -21,8 +22,10 @@ import { NgbdModalBasic } from './modal/modal.component';
         NgbModule,
         NouisliderModule,
         RouterModule,
-        JwBootstrapSwitchNg2Module
+        JwBootstrapSwitchNg2Module,
+        NgxPayPalModule
       ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA],
     declarations: [
         ComponentsComponent,
         BasicelementsComponent,

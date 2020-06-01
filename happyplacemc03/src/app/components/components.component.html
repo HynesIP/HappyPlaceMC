@@ -8,21 +8,24 @@
               <img class="n-logo hidden" src="assets/img/now-logo.png" alt="">
               <h1 class="title">Happy Place&trade;</h1>
               <h2>A kind place to experience Minecraft.</h2>
+              
               <ul style="font-size: 24px; list-style: none;">
                   <li>No Mobs.</li>
                   <li>Always Sunny.</li>
                   <li>Family Run.</li>
                   <li>Creative Mode.</li>
                   <li>No PVP — Player versus Player.</li>
-                  <li>Lots to Explore.</li>
+                  <li>Lots to Explore for Free.</li>
                   <li>Miles and Miles of Rollercoasters.</li>
                   <li>Scheduled Build Competitions.</li>
-                  <li>A Continuously Growing Site Guide.</li>
+                  <li>This Continuously Growing Site Guide.</li>
                   <li>No Griefing.</li>
                   <li>Subscriber Plots & Build Requests.</li>
                   <li>Earn Trusted Access.</li>
               </ul>
+              
           </div>
+
           <h6 class="category category-absolute hidden">Designed by
               <a href="https://invisionapp.com/" target="_blank">
                   <img src="assets/img/invision-white-slim.png" class="invision-logo" />
@@ -34,6 +37,7 @@
   </div>
 
   <div class="main">
+    
     <div class="section section-images">
         <div class="container ">
             <div class="row">
@@ -51,9 +55,20 @@
             </div>
         </div>
     </div>
-      <app-basicelements></app-basicelements>
-      <app-navigation></app-navigation>
-      <div class="section section-tabs">
+    <div class="section section-subscribe">
+        <div class="container ">
+            <div class="row">
+                <div class="col-md-12">
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+        </div>
+        </div>
+        </div>
+    </div>
+
+
+      <app-basicelements class="hidden"></app-basicelements>
+      <app-navigation class="hidden"></app-navigation>
+      <div class="section section-tabs hidden">
           <div class="container">
               <div class="row">
                   <div class="col-md-10 ml-auto col-xl-6 mr-auto">
@@ -141,7 +156,7 @@
               </div>
           </div>
       </div>
-      <div class="section section-pagination">
+      <div class="section section-pagination hidden">
           <div class="container">
               <div class="row">
                   <div class="col-md-6">
@@ -205,14 +220,14 @@
               </div>
           </div>
       </div>
-      <div class="section" id="notifications">
-          <div class="container">
+      <div class="section hidden" id="notifications">
+          <div class="container hidden">
             <h4>Notifications</h4>
           </div>
-          <app-notification></app-notification>
+          <app-notification class="hidden"></app-notification>
       </div>
-      <app-typography></app-typography>
-      <div class="section section-javascript" id="javascriptComponents">
+      <app-typography class="hidden"></app-typography>
+      <div class="section section-javascript  hidden" id="javascriptComponents">
           <div class="container">
               <h3 class="title">Angular Native Components</h3>
               <div class="row" id="modals">
@@ -313,7 +328,7 @@
           </div>
         </div>
       </div>
-      <div class="section section-nucleo-icons">
+      <div class="section section-nucleo-icons hidden">
           <div class="container">
               <div class="row">
                   <div class="col-lg-6 col-md-12">
@@ -349,8 +364,7 @@
               </div>
           </div>
       </div>
-
-      <div class="section">
+      <div class="section hidden">
           <div class="container text-center">
               <div class="row justify-content-md-center">
                   <div class="col-md-12 col-lg-8">
@@ -360,7 +374,8 @@
               </div>
           </div>
       </div>
-      <div class="section section-signup" style="background-image: url('assets/img/bg11.jpg'); background-size: cover; background-position: top center; min-height: 700px;">
+
+      <div class="section section-signup" style="background-image: url('assets/img/bg11x.jpg'); background-size: cover; background-position: top center; min-height: 700px;">
           <div class="container login-page">
             <div class="row">
               <div class="col-md-4 content-center ml-auto mr-auto">

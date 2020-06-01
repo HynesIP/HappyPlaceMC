@@ -84,7 +84,7 @@
 
     .section-images{
         height: 500px;
-        max-height: 500px;
+        max-height: 166px;
 
         .hero-images-container{
             max-width: 500px;
@@ -309,7 +309,7 @@
 @media screen and (max-width: 768px){
     .section-images{
         height: 300px;
-        max-height: 300px;
+        max-height: 0px;
 
         .hero-images-container{
             max-width: 380px;

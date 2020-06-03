@@ -84,9 +84,11 @@
 
     .section-images{
         height: 500px;
-        max-height: 166px;
+        max-height: 177px;
 
         .hero-images-container{
+            top: 66px;
+            left: 0;
             max-width: 500px;
         }
 
@@ -293,7 +295,11 @@
 }
 
 @media screen and (min-width: 991px) and (max-width: 1200px){
+
     .section-images{
+        .hero-images-container{
+            left: 0;
+        }
         .hero-images-container-1{
             right: 29%;
             max-width: 370px;
@@ -365,6 +371,7 @@ and ( orientation : portrait){
     }
 
     .section-images .hero-images-container{
+        top: 6px;
         max-width: 300px;
     }
 

@@ -100,7 +100,6 @@ AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk
       }
   }).render('#paypal-button-container');
 </script>
-</script-->
 */
     private initConfig(): void {
 

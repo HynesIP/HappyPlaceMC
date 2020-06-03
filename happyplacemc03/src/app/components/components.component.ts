@@ -104,9 +104,14 @@ AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk
     private initConfig(): void {
 
         this.payPalConfig = {
+            vault: "true",
             currency: 'USD',
-            //clientId: 'AWoynf1N8S6VZs8jiFTRfj6YYNtBpbr0tOhlaw_62GxFxCtWN24iYYW7dtPUHJfWJdVg4DQ-N-NKPuw8',
             clientId: 'AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk',
+            createSubscription: function(data, actions) {
+                return actions.subscription.create({
+                  'plan_id': 'P-3F474576VK828232PL3KT7MA'
+                });
+            },
             /*createOrderOnClient: (data) => < ICreateOrderRequest > {
                 intent: 'CAPTURE',
                 purchase_units: [{

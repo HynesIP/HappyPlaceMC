@@ -13,19 +13,21 @@ import { NucleoiconsComponent } from './nucleoicons/nucleoicons.component';
 import { ComponentsComponent } from './components.component';
 import { NotificationComponent } from './notification/notification.component';
 import { NgbdModalBasic } from './modal/modal.component';
-import { NgxPayPalModule } from 'ngx-paypal';
+import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
+import { StripeCheckout, StripeModule } from 'ngx-stripe-checkout';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        NgbModule,
-        NouisliderModule,
-        RouterModule,
-        JwBootstrapSwitchNg2Module,
-        NgxPayPalModule
-      ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA],
+imports: [
+    CommonModule,
+    FormsModule,
+    NgbModule,
+    NouisliderModule,
+    RouterModule,
+    JwBootstrapSwitchNg2Module,
+    NgxStripeModule.forRoot("pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt"),
+    StripeModule
+    ],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     declarations: [
         ComponentsComponent,
         BasicelementsComponent,
@@ -35,6 +37,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
         NotificationComponent,
         NgbdModalBasic
     ],
-    exports:[ ComponentsComponent ]
+    exports:[ ComponentsComponent ],
+    providers: [
+        StripeCheckout
+    ]
 })
 export class ComponentsModule { }

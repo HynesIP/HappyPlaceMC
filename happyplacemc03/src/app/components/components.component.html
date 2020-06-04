@@ -60,15 +60,25 @@
             <div class="row" style="text-align: center;">                
                 <div class="col-md-12">
                     <h6>Join our family with build access to one plot on My.HappyPlaceMC.com — $1.99 setup + $1.99 monthly with 7 day trial.</h6>
-                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+
+<!-- -->   
+
+<ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
+<div class="error">
+  {{error?.message}}
+</div>
+<button (click)="getCardToken()" [disabled]="!complete">Subscribe</button>
+
+  <!-- -->
+  
                 </div>
             </div>
         </div>
     </div>
 
-      <app-basicelements class="hidden"></app-basicelements>
+      <!--app-basicelements class="hidden"></app-basicelements>
       <app-navigation class="hidden"></app-navigation>
-      <app-typography class="hidden"></app-typography>
+      <app-typography class="hidden"></app-typography-->
       
       <div class="section section-signup" style="background-image: url('assets/img/map.png'); background-size: cover; background-position: top center; min-height: 700px;">
           <div class="container login-page">
@@ -190,7 +200,9 @@
               </div>
           </div>
       </div>
+
   </div>
+
   <footer class="footer" data-background-color="black">
       <div class="container">
           <nav>

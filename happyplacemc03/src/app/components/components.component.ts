@@ -2,10 +2,20 @@ import { Component, OnInit, Renderer2, OnDestroy, ViewChild } from '@angular/cor
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Rellax from 'rellax';
-import {
-    IPayPalConfig,
-    ICreateOrderRequest 
-} from 'ngx-paypal';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { 
+    Element as StripeElement,
+    ElementOptions,
+    ElementsOptions,
+    StripeService,
+    LazyStripeAPILoader,
+    DocumentRef,
+    PlatformService,
+
+} from "@nomadreservations/ngx-stripe";
+import { StripeCheckout, OnetimeCheckoutOptions, RecurringCheckoutOptions } from 'ngx-stripe-checkout';
+
+
 
 @Component({
     selector: 'app-components',
@@ -18,6 +28,38 @@ import {
 })
 
 export class ComponentsComponent implements OnInit, OnDestroy {
+    
+
+    stripeKey = '';
+    error: any;
+    complete = false;
+    element: StripeElement;
+    
+    cardOptions: ElementOptions = {
+        iconStyle: "solid",
+        style: {
+            base: {
+                iconColor: '#276fd3',
+                color: '#31325F',
+                lineHeight: '40px',
+                fontWeight: 300,
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSize: '18px',
+                '::placeholder': {
+                    color: '#CFD7E0'
+                }
+            },
+            invalid: {
+              iconColor: '#FFC7EE',
+              color: '#FFC7EE',
+            }
+        }
+    };
+  
+    elementsOptions: ElementsOptions = {
+      locale: 'en'
+    };
+
     data : Date = new Date();
 
     page = 4;
@@ -36,19 +78,60 @@ export class ComponentsComponent implements OnInit, OnDestroy {
 
     state_icon_primary = true;
 
-   
-        public payPalConfig?: IPayPalConfig;
-        public payPalOrder?: ICreateOrderRequest;
 
     constructor( 
         private renderer : Renderer2, 
-        config: NgbAccordionConfig
+        config: NgbAccordionConfig,
+        private _stripe: StripeService,
+        public stripe: StripeCheckout
         ) {
         config.closeOthers = true;
         config.type = 'info';
+
+        this.stripe.initializeStripe(`pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt`)
+            .then((res) => console.log(res))	// Stripe Initialized
+            .catch((err) => console.log(err));	// Error message
+        
     }
  
+    cardUpdated(result) {
+        this.element = result.element;
+        this.complete = result.card.complete;
+        this.error = undefined;
+    }
 
+  keyUpdated() {
+    this._stripe.changeKey(this.stripeKey);
+  }
+
+  getCardToken() {
+
+    var checkoutOptions: RecurringCheckoutOptions = {
+        items: [{
+          plan: "price_1Gq4dEBgmwEPLtY9FKbHOGIE",
+          quantity: 1
+        }],
+        successUrl: 'https://me.happyplacemc.com/payment/success',
+        cancelUrl: 'https://me.happyplacemc.com/payment/failure'
+      }
+      this.stripe.openRecurringCheckout(checkoutOptions);
+
+    /*
+    this._stripe.createToken(this.element, {
+      name: 'tested_ca',
+      address_line1: '123 A Place',
+      address_line2: 'Suite 100',
+      address_city: 'Irving',
+      address_state: 'BC',
+      address_zip: 'VOE 1H0',
+      address_country: 'CA'
+    }).subscribe(result => {
+      // Pass token to service for purchase.
+      console.log(result);
+    });
+    */
+  }
+    
     isWeekend(date: NgbDateStruct) {
         const d = new Date(date.year, date.month - 1, date.day);
         return d.getDay() === 0 || d.getDay() === 6;
@@ -69,109 +152,15 @@ export class ComponentsComponent implements OnInit, OnDestroy {
         var body = document.getElementsByTagName('body')[0];
         body.classList.add('index-page');
         
-        this.initConfig();
 
     }
     showSuccess: boolean;
     showCancel: boolean;
     showError: boolean;
     resetStatus(){}
-/*
-<div id="paypal-button-container"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=
-AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk
-&vault=true" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-      style: {
-          shape: 'rect',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'subscribe',
-          
-      },
-      createSubscription: function(data, actions) {
-        return actions.subscription.create({
-          'plan_id': 'P-3F474576VK828232PL3KT7MA'
-        });
-      },
-      onApprove: function(data, actions) {
-        alert(data.subscriptionID);
-      }
-  }).render('#paypal-button-container');
-</script>
-*/
-    private initConfig(): void {
 
-        this.payPalConfig = {
-            vault: "true",
-            currency: 'USD',
-            clientId: 'AdHkCDw8jkSsYxAEclDLg1zzrx8v9UXBo_ptWkJS7ZMJzMUR8xCIxtFiPGctcDsr3UpMVdm0tL7pOMmk',
-            createSubscription: function(data, actions) {
-                return actions.subscription.create({
-                  'plan_id': 'P-3F474576VK828232PL3KT7MA'
-                });
-            },
-            /*createOrderOnClient: (data) => < ICreateOrderRequest > {
-                intent: 'CAPTURE',
-                purchase_units: [{
-                    amount: {
-                        currency_code: 'USD',
-                        value: '0.99',
-                        breakdown: {
-                            item_total: {
-                                currency_code: 'USD',
-                                value: '0.99'
-                            }
-                        }
-                    },
-                    items: [{
-                        name: 'Happy Place Subscription',
-                        quantity: '1',
-                        category: 'DIGITAL_GOODS',
-                        unit_amount: {
-                            currency_code: 'USD',
-                            value: '0.99',
-                        },
-                    }]
-                }]
-            },*/
-            advanced: {
-                commit: 'true'
-            },
-            style: {
-                label: 'paypal',
-                layout: 'vertical'
-            },
-            onApprove: (data, actions) => {
-                console.log('onApprove - transaction was approved, but not authorized', data, actions);
-                actions.order.get().then(details => {
-                    console.log('onApprove - you can get full order details inside onApprove: ', details);
-                });
 
-            },
-            onClientAuthorization: (data) => {
-                console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
-                this.showSuccess = true;
-            },
-            onCancel: (data, actions) => {
-                console.log('OnCancel', data, actions);
-                this.showCancel = true;
-
-            },
-            onError: err => {
-                console.log('OnError', err);
-                this.showError = true;
-            },
-            onClick: (data, actions) => {
-                console.log('onClick', data, actions);
-                this.resetStatus();
-            }
-        };
-
-        console.log(this.payPalOrder)
-        console.log(JSON.stringify(this.payPalConfig))
-    }
+       
 
 
 

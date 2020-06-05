@@ -15,7 +15,9 @@ const routes: Routes =[
     { path: 'nucleoicons',          component: NucleoiconsComponent },
     { path: 'examples/landing',     component: LandingComponent },
     { path: 'examples/login',       component: LoginComponent },
-    { path: 'examples/profile',     component: ProfileComponent }
+    { path: 'examples/profile',     component: ProfileComponent },
+    { path: 'payment/success',      component: ComponentsComponent },
+    { path: 'payment/failure',      component: ComponentsComponent }
 ];
 
 @NgModule({

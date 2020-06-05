@@ -111,8 +111,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
           plan: "price_1Gq4dEBgmwEPLtY9FKbHOGIE",
           quantity: 1
         }],
-        successUrl: 'https://me.happyplacemc.com/payment/success',
-        cancelUrl: 'https://me.happyplacemc.com/payment/failure'
+        successUrl: 'http://my.happyplacemc.com/payment/success',
+        cancelUrl: 'http://my.happyplacemc.com/payment/failure'
       }
       this.stripe.openRecurringCheckout(checkoutOptions);
 

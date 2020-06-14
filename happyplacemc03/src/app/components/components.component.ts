@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy, ViewChild, Inject } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
 import * as Rellax from 'rellax';
@@ -14,8 +14,8 @@ import {
 
 } from "@nomadreservations/ngx-stripe";
 import { StripeCheckout, OnetimeCheckoutOptions, RecurringCheckoutOptions } from 'ngx-stripe-checkout';
-
-
+import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatList } from '@angular/material/list';
 
 @Component({
     selector: 'app-components',
@@ -26,10 +26,7 @@ import { StripeCheckout, OnetimeCheckoutOptions, RecurringCheckoutOptions } from
     }
     `]
 })
-
 export class ComponentsComponent implements OnInit, OnDestroy {
-    
-
     stripeKey = '';
     error: any;
     complete = false;
@@ -83,7 +80,8 @@ export class ComponentsComponent implements OnInit, OnDestroy {
         private renderer : Renderer2, 
         config: NgbAccordionConfig,
         private _stripe: StripeService,
-        public stripe: StripeCheckout
+        public stripe: StripeCheckout,
+        private _bottomSheet: MatBottomSheet
         ) {
         config.closeOthers = true;
         config.type = 'info';
@@ -93,7 +91,11 @@ export class ComponentsComponent implements OnInit, OnDestroy {
             .catch((err) => console.log(err));	// Error message
         
     }
- 
+
+    openDiscordDrawer(): void {
+      this._bottomSheet.open(HappyPlaceDiscordBottomDrawer);
+    }
+    
     cardUpdated(result) {
         this.element = result.element;
         this.complete = result.card.complete;
@@ -173,4 +175,31 @@ export class ComponentsComponent implements OnInit, OnDestroy {
     }
 
     
+}
+
+@Component({
+  selector: 'happy-place-discord-bottom-sheet',
+  template: `
+  <div style="text-align: center;">
+    <iframe src="https://discord.com/widget?id=719598845046161488&theme=light&username=Termon8" width="100%" height="500" allowtransparency="true" frameborder="0"></iframe>
+  </div>
+  `,
+  providers: [
+    MatList
+  ]
+})
+export class HappyPlaceDiscordBottomDrawer {
+  constructor(
+    private _bottomSheetRef: MatBottomSheetRef<HappyPlaceDiscordBottomDrawer>,
+    public matList: MatList
+    
+    ) {}
+
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
+
+
+
 }

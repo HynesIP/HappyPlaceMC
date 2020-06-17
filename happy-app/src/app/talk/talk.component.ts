@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '../../../node_modules/@angular/forms';
 import { FormGroup,Validators,FormArray,FormControl } from '@angular/forms';
-import { TalkService } from '../services/talk.service';
+import { TalkService } from '../api/services/talk.service';
 @Component({
   selector: 'app-chat',
   templateUrl: './talk.component.html',

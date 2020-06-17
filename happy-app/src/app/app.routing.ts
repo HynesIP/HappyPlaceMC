@@ -7,7 +7,7 @@ import { LandingComponent } from './examples/landing/landing.component';
 import { ProfileComponent } from './examples/profile/profile.component';
 import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
 import { TalkComponent } from './talk/talk.component';
-import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './api/services/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { PMComponent } from './pm/pm.component';

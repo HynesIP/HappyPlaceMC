@@ -10,19 +10,19 @@ export class AuthService {
   constructor(private http: HttpClient) { }
  //loggin in for login component 
  login(email: string, password: string){
-  return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
-    .pipe(
-      map(result => {
-        localStorage.setItem('access_token', result.token);
-        console.group("Login response.");
-          console.log('access_token');
-          console.log(result);
-        console.groupEnd();
-
-         return result;
-      })
-    );
-}
+    return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
+      .pipe(
+        map(result => {
+          localStorage.setItem('access_token', result.token);
+          console.group("Login response.");
+            console.log('access_token');
+            console.log(result);
+          console.groupEnd();
+          
+          return result;
+        })
+      );
+  }
   
   //signup for the signup component 
   signup(name:string,nickName:string,mobNumber:number,email: string, password: string): Observable<boolean> {

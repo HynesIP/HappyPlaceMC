@@ -82,7 +82,6 @@ router.post("/signin",function(req,res){
                                                 expiresIn: '2h'
                                             }
                                         );
-                  
 
                  return res.status(200).json({
                     success: 'JWT Successfully generated',

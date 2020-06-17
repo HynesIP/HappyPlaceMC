@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
-import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA, Provider, forwardRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,13 +22,20 @@ import { TalkComponent } from './talk/talk.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { PMComponent } from './pm/pm.component';
-
 import { SplashComponent } from './splash.component';
-
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
 import { StripeCheckout, StripeModule } from 'ngx-stripe-checkout';
-
 import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
+
+import { ApiModule } from './api/api.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiInterceptor } from './api/api.interceptor';
+
+export const API_INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  useExisting: forwardRef(() => ApiInterceptor),
+  multi: true
+};
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -68,14 +75,17 @@ export function tokenGetter() {
         }),
         NgxStripeModule.forRoot("pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt"),
         StripeModule,
-        JwBootstrapSwitchNg2Module
+        JwBootstrapSwitchNg2Module,
+        ApiModule.forRoot({rootUrl: "mongo"})
     ],
     exports:[ 
         SplashComponent
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA],
     providers: [
-        StripeCheckout
+        StripeCheckout,
+        ApiInterceptor,
+        API_INTERCEPTOR_PROVIDER
     ],
     bootstrap: [AppComponent]
 })

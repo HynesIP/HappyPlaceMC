@@ -70,6 +70,9 @@
                     </h2>
                     <h4>Get subscription build access to one 256 block plot on our Minecraft 1.12 server My.HappyPlaceMC.com — Only $1.99 monthly with 7 day trial.</h4>
                     <h4>Upgrading to Minecraft 1.15.2 soon!</h4>
+              <app-login></app-login>      
+                <app-signup></app-signup>
+
                     <!-- --> 
                         <ngx-stripe-card class="hidden" [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
                         <div class="error">
@@ -77,7 +80,7 @@
                         </div>
                         <button type="button" class="btn btn-primary" (click)="getCardToken()">Subscribe</button>  
                         <button mat-raised-button (click)="openDiscordDrawer()"  class="hidden">Discord</button>
-                    <!-- -->
+                        <!-- -->
                 </div>
             </div>
         </div>
@@ -112,7 +115,7 @@
                         </div>
                         <div class="text-center">
                             <h6>
-                                <a href="#pablo" class="link">Create Account</a>
+                                <a [routerLink]="['/signup']" class="link">Create Account</a>
                             </h6>
                         </div>
                         <div class="text-center">
@@ -125,7 +128,7 @@
             </div>
         </div>
             <div class="col text-center">
-                <a [routerLink]="['/examples/login']" class="btn btn-simple btn-round btn-white btn-lg">View Login Page</a>
+                <a [routerLink]="['/login']" class="btn btn-simple btn-round btn-white btn-lg">View Login Page</a>
             </div>
         </div>
     </div>

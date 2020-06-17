@@ -50,6 +50,7 @@ router.post('/signup',function(req,res){
         }
         else{
             console.log("Builder created");
+            console.log()
             res.json({"msg":"Builder created successfully"});
         }
     })
@@ -58,6 +59,7 @@ router.post("/signin",function(req,res){
     User.findOne({email:req.body.email})
     .exec()
     .then(function(user){
+        const userObj = user;
         bcrypt.compare(req.body.password,user.password,function(err,user){
 
             if(err){
@@ -69,21 +71,24 @@ router.post("/signin",function(req,res){
             }
 
             if(user){
-               const JWTtoken = jwt.sign({
-                   
-                    email: user.email,
-                    _id: user._id
-                  },
-                  'secret',
-                   {
-                     expiresIn: '2h'
-                   });
+                
+                const JWTtoken = jwt.sign(
+                                            {
+                                                email: user.email,
+                                                _id: user._id
+                                            },
+                                            'secret',
+                                            {
+                                                expiresIn: '2h'
+                                            }
+                                        );
                   
 
                  return res.status(200).json({
                     success: 'JWT Successfully generated',
-                     token: JWTtoken,
-                    user:user
+                    token: JWTtoken,
+                    email: userObj.email,
+                    name: userObj.nickName
                   });
                 
             }

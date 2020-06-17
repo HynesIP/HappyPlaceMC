@@ -3,18 +3,13 @@ import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
-import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 import { RouterModule } from '@angular/router';
-
-import { BasicelementsComponent } from './basicelements/basicelements.component';
-import { NavigationComponent } from './navigation/navigation.component';
-import { TypographyComponent } from './typography/typography.component';
-import { NucleoiconsComponent } from './nucleoicons/nucleoicons.component';
-import { ComponentsComponent } from './components.component';
-import { NotificationComponent } from './notification/notification.component';
-import { NgbdModalBasic } from './modal/modal.component';
-import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
-import { StripeCheckout, StripeModule } from 'ngx-stripe-checkout';
+import { BasicelementsComponent } from './components/basicelements/basicelements.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { TypographyComponent } from './components/typography/typography.component';
+import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { NgbdModalBasic } from './components/modal/modal.component';
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -127,16 +122,12 @@ import {
         NgbModule,
         NouisliderModule,
         RouterModule,
-        JwBootstrapSwitchNg2Module,
-        NgxStripeModule.forRoot("pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt"),
-        StripeModule,
         MatBottomSheetModule,
         BrowserAnimationsModule,
         MaterialModule
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     declarations: [
-        ComponentsComponent,
         BasicelementsComponent,
         NavigationComponent,
         TypographyComponent,
@@ -144,12 +135,8 @@ import {
         NotificationComponent,
         NgbdModalBasic
     ],
-    exports:[ 
-        ComponentsComponent
-    ],
     providers: [
-        StripeCheckout,
         {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
     ]
 })
-export class ComponentsModule { }
+export class SplashModule { }

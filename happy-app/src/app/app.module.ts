@@ -5,11 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
+import { SplashModule } from './splash.module';
 import { ExamplesModule } from './examples/examples.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { NgxPayPalModule } from 'ngx-paypal';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +21,14 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { TalkComponent } from './talk/talk.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { PrivatechatComponent } from './privatechat/privatechat.component';
+import { PMComponent } from './pm/pm.component';
+
+import { SplashComponent } from './splash.component';
+
+import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
+import { StripeCheckout, StripeModule } from 'ngx-stripe-checkout';
+
+import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -35,7 +41,8 @@ export function tokenGetter() {
         TalkComponent,
         LoginComponent,
         SignupComponent,
-        PrivatechatComponent
+        PMComponent,
+        SplashComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -44,9 +51,8 @@ export function tokenGetter() {
         FormsModule,
         RouterModule,
         AppRoutingModule,
-        ComponentsModule,
+        SplashModule,
         ExamplesModule,
-        NgxPayPalModule,
         HttpClientModule,
         MatFormFieldModule,
         MatInputModule,
@@ -59,10 +65,18 @@ export function tokenGetter() {
           config: {
             tokenGetter: tokenGetter
           }
-        })
+        }),
+        NgxStripeModule.forRoot("pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt"),
+        StripeModule,
+        JwBootstrapSwitchNg2Module
+    ],
+    exports:[ 
+        SplashComponent
     ],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA],
-    providers: [],
+    providers: [
+        StripeCheckout
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -19,14 +19,15 @@ import { MatList } from '@angular/material/list';
 
 @Component({
     selector: 'app-components',
-    templateUrl: './components.component.html',
+    templateUrl: './splash.component.html',
     styles: [`
     ngb-progressbar {
         margin-top: 5rem;
     }
     `]
 })
-export class ComponentsComponent implements OnInit, OnDestroy {
+
+export class SplashComponent implements OnInit, OnDestroy {
     stripeKey = '';
     error: any;
     complete = false;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../api/services/auth.service';
+import { AuthService } from '../api/services';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -19,10 +20,14 @@ export class SignupComponent  {
   public error: string;
   public success_message:string;
   public error_message:string;
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+      private auth: AuthService, 
+      private router: Router
+    ){}
 
   public submit() {
-    console.log("inside ts")
+    console.log("Sign up called");
+
     this.auth.signup(this.name,this.nickName,this.mobNumber,this.email, this.password)
       .pipe(first())
       .subscribe(

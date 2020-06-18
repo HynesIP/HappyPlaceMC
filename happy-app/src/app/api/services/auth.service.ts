@@ -13,7 +13,7 @@ export class AuthService {
     return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
       .pipe(
         map(result => {
-          localStorage.setItem('access_token', result.token);
+          sessionStorage.setItem('access_token', result.token);
           console.group("Login response.");
             console.log('access_token');
             console.log(result);
@@ -32,7 +32,7 @@ export class AuthService {
       console.log(mobNumber);
       console.log(email);
     console.groupEnd();
-    localStorage.setItem("email",email);
+    sessionStorage.setItem("email",email);
     return this.http.post('http://localhost:8082/api/signup', {name:name,nickName:nickName,mobNumber:mobNumber,email:email, password: password})
       .pipe(
         map(result => {
@@ -43,11 +43,11 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    sessionStorage.removeItem('access_token');
   }
 
   public get loggedIn(): boolean {
-    return (localStorage.getItem('access_token') !== null);
+    return (sessionStorage.getItem('access_token') !== null);
   }
   
  

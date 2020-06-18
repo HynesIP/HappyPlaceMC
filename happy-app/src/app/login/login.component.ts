@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
       }
     
       public submit() {
-        localStorage.setItem("email",this.loginForm.get("email").value);
+        sessionStorage.setItem("email",this.loginForm.get("email").value);
         this.auth.login(this.loginForm.get("email").value, this.loginForm.get('password').value)
           .pipe(first())
           .subscribe(

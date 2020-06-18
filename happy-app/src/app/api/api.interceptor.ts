@@ -31,24 +31,6 @@ export class ApiInterceptor implements HttpInterceptor {
   ){}
 
   
-
-  /*
-   login(email: string, password: string){
-    return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
-      .pipe(
-        map(result => {
-          localStorage.setItem('access_token', result.token);
-          console.group("Login response.");
-            console.log('access_token');
-            console.log(result);
-          console.groupEnd();
-          
-          return result;
-        })
-      );
-  }
-  */
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiThis: string = this.apiConfiguration.rootUrl;    
         req = req.clone({
@@ -61,20 +43,23 @@ export class ApiInterceptor implements HttpInterceptor {
             tap(x => x, err => {
                 
                 if(err.status != 200){
-                    
+
                     console.error(`Error performing request, status code = ${err.status}`);
 
                     let apiThis: string = this.apiConfiguration.rootUrl;
                     console.log(apiThis); 
 
                     if(err.status == 401){
-                    console.log(err);
+                        this.router.navigate(['/login']);
+                        console.log(err);
                     }else
                     if(err.status == 406){
-                    console.log(err)
+                        this.router.navigate(['/login']);
+                        console.log(err)
                     } else
                     if(err.status == 500){
-                    console.log("An unknowm system error occurred.")
+                        this.router.navigate(['/login']);
+                        console.log("An unknowm system error occurred.")
                     }
 
                 } else {

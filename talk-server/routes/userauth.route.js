@@ -11,15 +11,13 @@ router.get('/protectedRoute',verifyToken,function(req,res){
     console.log(decoded);
     jwt.verify(req.token,'secret',(err,user)=>{
     
-    if (err) throw err;
-    
-    else
- 
-        res.json({
+    if (err) {
+        throw err;
+    } else
+         res.json({
             message: 'Post created',
             user,
             decoded
-          
           });
     });
 });
@@ -60,13 +58,11 @@ router.post("/signin",function(req,res){
     .exec()
     .then(function(user){
         const userObj = user;
-        bcrypt.compare(req.body.password,user.password,function(err,user){
+        bcrypt.compare(req.body.password,user.password, function(err,user){
 
             if(err){
                 return res.status(401).json({
-                    failed: 'Unauthorized Access'
-                    
-                    
+                    failed: 'Unauthorized Access'    
                  });
             }
 
@@ -84,7 +80,6 @@ router.post("/signin",function(req,res){
                                         );
 
                  return res.status(200).json({
-                    success: 'JWT Successfully generated',
                     token: JWTtoken,
                     email: userObj.email,
                     name: userObj.nickName

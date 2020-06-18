@@ -38,7 +38,7 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
 };
 
 export function tokenGetter() {
-    return localStorage.getItem('access_token');
+    return sessionStorage.getItem('access_token');
   }
 
 @NgModule({

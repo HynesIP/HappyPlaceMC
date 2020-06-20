@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
 import { SplashModule } from './splash.module';
 import { ExamplesModule } from './examples/examples.module';
-import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,11 +24,12 @@ import { PMComponent } from './pm/pm.component';
 import { SplashComponent } from './splash.component';
 import { NgxStripeModule } from '@nomadreservations/ngx-stripe';
 import { StripeCheckout, StripeModule } from 'ngx-stripe-checkout';
-import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
-
-import { ApiModule } from './api/api.module';
+import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';import { ApiModule } from './api/api.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './api/api.interceptor';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive'; // this includes the core NgIdleModule but includes keepalive providers for easy wireup
+import { MomentModule } from 'angular2-moment'; // optional, provides moment-style pipes for date formatting
+import { AppComponent } from './app.component';
 
 export const API_INTERCEPTOR_PROVIDER: Provider = {
   provide: HTTP_INTERCEPTORS,
@@ -76,12 +76,14 @@ export function tokenGetter() {
         NgxStripeModule.forRoot("pk_test_gEBsCSok1NfVPeBLfBRQCtPz00KQpcBsbt"),
         StripeModule,
         JwBootstrapSwitchNg2Module,
-        ApiModule.forRoot({rootUrl: "mongo"})
+        ApiModule.forRoot({rootUrl: "mongo"}),
+        MomentModule,
+        NgIdleKeepaliveModule.forRoot()
     ],
     exports:[ 
         SplashComponent
     ],
-    schemas: [ CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     providers: [
         StripeCheckout,
         ApiInterceptor,

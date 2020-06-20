@@ -5,20 +5,79 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/common';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    providers: [
+        Idle
+    ]
 })
+
 export class AppComponent implements OnInit {
+    
     private _router: Subscription;
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
 
-    constructor( private renderer : Renderer2, private router: Router, @Inject(DOCUMENT,) private document: any, private element : ElementRef, public location: Location) {}
+    idleState = 'Not started.';
+    timedOut = false;
+    lastPing?: Date = null;
+
+    constructor( 
+            private idle: Idle,         
+            private renderer : Renderer2, 
+            private router: Router, 
+            @Inject(DOCUMENT) private document: any, 
+            private element : ElementRef, 
+            public location: Location
+        ) {
+            this.idle.setIdle(900);
+            this.idle.setTimeout(30);
+            this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+            this.idle.onIdleEnd.subscribe(() => this.idleState = 'Session Active');
+            this.idle.onTimeout
+            .subscribe(() => {
+
+                this.idleState = '';
+                this.timedOut = true;
+                
+                    sessionStorage.setItem("access_token", null);
+
+                    this.router.navigateByUrl("/");
+
+            });
+
+            this.idle.onIdleStart
+                .subscribe(() => {
+                    
+                    this.idleState = 'Session expired.'
+
+                });
+
+            this.idle.onTimeoutWarning
+                .subscribe((countdown) => {
+                
+                    this.idleState = 'Logout in ' + countdown + 's.'
+                    
+                    });
+            
+            this.reset();
+        }
+
+    reset() {
+        this.idle.watch();
+        this.idleState = '';
+        this.timedOut = false;
+    }
+
     ngOnInit() {
+
         var navbar : HTMLElement = this.element.nativeElement.children[0].children[0];
+
         this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
+
             if (window.outerWidth > 991) {
                 window.document.children[0].scrollTop = 0;
             }else{
@@ -38,6 +97,15 @@ export class AppComponent implements OnInit {
                     navbar.classList.add('navbar-transparent');
                 }
             });
+
+
+
+
+
+
         });
+
+        
+
     }
 }

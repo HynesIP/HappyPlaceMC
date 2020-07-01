@@ -4,12 +4,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { NouisliderModule } from 'ng2-nouislider';
 import { RouterModule } from '@angular/router';
-import { BasicelementsComponent } from './components/basicelements/basicelements.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { TypographyComponent } from './components/typography/typography.component';
-import { NucleoiconsComponent } from './components/nucleoicons/nucleoicons.component';
-import { NotificationComponent } from './components/notification/notification.component';
-import { NgbdModalBasic } from './components/modal/modal.component';
+import { BasicelementsComponent } from './ui/basicelements/basicelements.component';
+import { NavigationComponent } from './ui/navigation/navigation.component';
+import { TypographyComponent } from './ui/typography/typography.component';
+import { NucleoiconsComponent } from './ui/nucleoicons/nucleoicons.component';
+import { NotificationComponent } from './ui/notification/notification.component';
+import { NgbdModalBasic } from './ui/modal/modal.component';
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -139,4 +139,4 @@ import {
         {provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}
     ]
 })
-export class SplashModule { }
+export class UIModule { }

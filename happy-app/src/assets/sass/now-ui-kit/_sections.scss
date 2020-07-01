@@ -104,6 +104,94 @@
 
 }
 
+.page-header-widget{
+    height: 32vh;
+    max-height: 32vh;
+    padding: 0;
+    color: $white-color;
+    position: relative;
+
+    background-position: center center;
+    background-size: cover;
+
+    .page-header-widget-image{
+        position: absolute;
+        background-size: cover;
+        background-position: center center;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    footer{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    .container{
+        height: 100%;
+        z-index: 1;
+        text-align: center;
+        position: relative;
+
+        > .content-center{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            -ms-transform: translate(-50%,-50%);
+            -webkit-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+
+            text-align: center;
+            padding: 0 15px;
+            color: #FFFFFF;
+            width: 100%;
+            max-width: 880px;
+        }
+    }
+
+    .category,
+    .description{
+        color: $opacity-5;
+    }
+
+    &.page-header-small{
+        min-height: 60vh;
+        max-height: 440px;
+    }
+
+    &:after,
+    &:before{
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        left: 0;
+        top: 0;
+        content: "";
+    }
+
+    &:before{
+        background-color: rgba(0,0,0,.25);
+    }
+
+    &[filter-color="orange"]{
+        @include linear-gradient(rgba($black-color,.20), rgba(224, 23, 3, 0.6));
+    }
+
+    &[filter-color="purple"]{
+        @include linear-gradient(rgba($black-color,.20), rgba(80, 9, 94, 0.6));
+    }
+
+    .container{
+        z-index: 2;
+    }
+
+}
+
 .clear-filter{
     &:after,
     &:before{
@@ -267,7 +355,7 @@
 }
 
 .section-images{
-    max-height: 670px;
+    max-height: 88px;
     min-height: 88px;
 
     .hero-images-container,
@@ -311,7 +399,9 @@
 [data-background-color="black"]{
     background-color: $black-color;
 }
-
+[data-background-color="purple"]{
+    background-color: $primary-color;
+}
 [data-background-color]{
     color: $white-color;
 

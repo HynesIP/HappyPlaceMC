@@ -1,41 +1,23 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { Router } from '@angular/router';
-import { AuthGuard } from '../../api/services/auth.guard';
 
 @Component({
-    selector: 'app-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class FooterComponent implements OnInit {
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(
-            public location: Location, 
-            private element : ElementRef,
-            private router: Router,
-            private authguard: AuthGuard
-
-        ) {
+    constructor(public location: Location, private element : ElementRef) {
         this.sidebarVisible = false;
-
-        console.log(authguard)
     }
-
-    loggedIn: boolean = this.authguard["auth"]["loggedIn"]; 
-
-    
 
     ngOnInit() {
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
-
-        console.log(this.loggedIn);
-        
     }
-    
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const html = document.getElementsByTagName('html')[0];
@@ -46,7 +28,6 @@ export class NavbarComponent implements OnInit {
 
         this.sidebarVisible = true;
     };
-
     sidebarClose() {
         const html = document.getElementsByTagName('html')[0];
         // console.log(html);
@@ -54,7 +35,6 @@ export class NavbarComponent implements OnInit {
         this.sidebarVisible = false;
         html.classList.remove('nav-open');
     };
-
     sidebarToggle() {
         // const toggleButton = this.toggleButton;
         // const body = document.getElementsByTagName('body')[0];
@@ -73,10 +53,5 @@ export class NavbarComponent implements OnInit {
         else {
             return false;
         }
-    }
-
-    logOut() {
-        sessionStorage.removeItem("account_token");
-        this.router.navigateByUrl("/home");
     }
 }

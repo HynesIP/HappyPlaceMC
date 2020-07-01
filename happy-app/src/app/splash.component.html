@@ -5,26 +5,13 @@
           <div class="content-center brand">
                <h1 class="title">Happy Place&trade;</h1>
               <h2>A kind place to experience Minecraft.</h2>
-              <ul style="font-size: 18px; list-style: none;background-color: #eeeeee38;padding: 11px; margin-bottom: 44px;">
-                  <li>No Mobs.</li>
-                  <li>Always Sunny.</li>
-                  <li>Family Run.</li>
-                  <li>Creative Mode.</li>
-                  <li>No PVP — Player versus Player.</li>
-                  <li>Lots to Explore for Free.</li>
-                  <li>Miles and Miles of Rollercoasters.</li>
-                  <li>Scheduled Build Competitions.</li>
-                  <li>This Continuously Growing Site Guide.</li>
-                  <li>No Griefing.</li>
-                  <li>Subscriber Plots & Build Requests.</li>
-                  <li>Earn Trusted Access.</li>
-              </ul>
+              
           </div>
       </div>
   </div>
   <div class="section section-images">
     <div class="container" style="min-height: 222px;">
-        <div class="row">
+        <div class="row" style="position: relative; top: -256px;">
             <div class="col-md-12">
                 <div class="hero-images-container" style="text-align: center; text-shadow: aquamarine;">
                     <img src="assets/img/Bubbadoodoo.png" alt=""><br /> Bubbadoodoo
@@ -35,7 +22,6 @@
                 <div class="hero-images-container-1" style="text-align: center;">
                     <img src="assets/img/Termon8.png" alt=""><br /> Termon8
                 </div>
-
             </div>
         </div>
     </div>
@@ -46,46 +32,39 @@
         <div class="container ">
             <div class="row" style="text-align: center;">                
                 <div class="col-md-12">
-                    <h1>Our family invites you to EXPLORE our Minecraft server!</h1>
-                    <h4>
-                        My.HappyPlaceMC.com<br/> a Minecraft server we've been building on for three years. Lots to see.<br/>
-                        <br/>
-                        Start in Creative mode. Walk, fly and roller coaster anywhere.
-                    </h4>
-                    <br/>
-                    <h2>
-                        Join My Happy Place for Free! 
+                    <h1>EXPLORE our Family<br/> 
+                        Minecraft server!</h1>
+                    <h2 style="text-transform: capitalize">
+                        MY.HAPPYPLACEMC.COM
                     </h2>
-                    <h4>Create a My Happy Place account below to earn access to maps and features.</h4>
-                    <ul style="list-style: none;">
-                        <li>Login to server map.</li>
-                        <li>Chat with us and other builders.</li>
-                        <li>Get access to our Blog.</li>
-                        <li>Compete in build competitions.</li>
-                        <li>Required to complete any Builder Subsciption.</li>
-                    </ul>
-                    <br/>
-                    <h2>
-                        Builder Subscription
-                    </h2>
-                    <h4>Get subscription build access to one 256 block plot on our Minecraft 1.12 server My.HappyPlaceMC.com — Only $1.99 monthly with 7 day trial.</h4>
-                    <h4>Upgrading to Minecraft 1.15.2 soon!</h4>
-              <app-login></app-login>      
-                <app-signup></app-signup>
 
+                    <ul style="font-size: 18px; list-style: none;background-color: #eeeeee38;padding: 11px; margin-bottom: 44px;">
+                        <li>No Mobs.</li>
+                        <li>Always Sunny.</li>
+                        <li>Family Run.</li>
+                        <li>Creative Mode.</li>
+                        <li>No PVP — Player versus Player.</li>
+                        <li>Lots to Explore for Free.</li>
+                        <li>Miles and Miles of Rollercoasters.</li>
+                        <li>Scheduled Build Competitions.</li>
+                        <li>This Continuously Growing Site Guide.</li>
+                        <li>No Griefing.</li>
+                        <li>Subscriber Plots & Build Requests.</li>
+                        <li>Earn Trusted Access.</li>
+                    </ul>
                     <!-- --> 
                         <ngx-stripe-card class="hidden" [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
                         <div class="error">
                         {{error?.message}}
                         </div>
-                        <button type="button" class="btn btn-primary" (click)="getCardToken()">Subscribe</button>  
-                        <button mat-raised-button (click)="openDiscordDrawer()"  class="hidden">Discord</button>
-                        <!-- -->
+                        
+                    <!-- -->
+                        
                 </div>
             </div>
         </div>
     </div>
-    <div class="section section-signup" style="background-image: url('assets/img/map.png'); background-size: cover; background-position: top center; min-height: 700px;">
+    <div class="section section-signup hidden" style="background-image: url('assets/img/map.png'); background-size: cover; background-position: top center; min-height: 700px;">
         <div class="container login-page">
         <div class="row">
             <div class="col-md-4 content-center ml-auto mr-auto">
@@ -132,7 +111,7 @@
             </div>
         </div>
     </div>
-    <div class="section section-examples" data-background-color="black">
+    <div class="section section-examples hidden" data-background-color="black">
         <div class="space-50"></div>
         <div class="container text-center">
             <div class="row">
@@ -151,53 +130,44 @@
             </div>
         </div>
     </div>
-    <div class="section section-social-media" data-background-color="black">
-        <div class="container">
+    <div class="section section-social-media" data-background-color="purple">
+        <app-widget-login></app-widget-login>
+
+        <div *ngIf="showCreate">
+            <app-widget-signup></app-widget-signup>
+        </div>
+
+        <div class="container" >
             <div class="row justify-content-md-center sharing-area text-center">
-            <div class="text-center col-md-12 col-lg-8">
-                <a target="_blank" href="https://www.twitter.com/myhappyplacemc" class="btn btn-neutral btn-icon btn-twitter btn-round btn-lg" rel="tooltip" title="Follow us">
-                <i class="fab fa-twitter"></i>
-                </a>
-                <a target="_blank" href="https://www.facebook.com/happyplacemc" class="btn btn-neutral btn-icon btn-facebook btn-round btn-lg" rel="tooltip" title="Like us">
-                <i class="fab fa-facebook-square"></i>
-                </a>
-                <a target="_blank" href="https://www.linkedin.com/in/randellhynes" class="btn btn-neutral btn-icon btn-linkedin btn-lg btn-round" rel="tooltip" title="Follow us">
-                <i class="fab fa-linkedin"></i>
-                </a>
-                <a target="_blank" href="https://github.com/hynesip/HappyPlaceMC" class="btn btn-neutral btn-icon btn-github btn-round btn-lg" rel="tooltip" title="Star on Github">
-                <i class="fab fa-github"></i>
-                </a>
-            </div>
+                <div class="text-center col-md-12 col-lg-8">
+                    <button type="button" class="btn btn-info" (click)="showCreateCard()" >Get Free Explorer Account</button>  
+                    <button type="button" class="btn btn-info" [routerLink]="['/login']" class="hidden">Login</button>
+                    <button type="button" class="btn btn-info" (click)="getCardToken()">Subscribe</button>  
+                    <button type="button" class="btn btn-info" (click)="openDiscordDrawer()" class="hidden">Discord</button>  
+                    <button type="button" class="btn btn-info" (click)="openLoginDrawer()" class="hidden">Login</button> 
+                </div>
             </div>
         </div>
-    </div>
+        <div class="container">
+            <div class="row justify-content-md-center sharing-area text-center">
+                <div class="text-center col-md-12 col-lg-8">
+                    <a target="_blank" href="https://www.twitter.com/myhappyplacemc" class="btn btn-neutral btn-icon btn-twitter btn-round btn-lg" rel="tooltip" title="Follow us">
+                    <i class="fab fa-twitter"></i>
+                    </a>
+                    <a target="_blank" href="https://www.facebook.com/happyplacemc" class="btn btn-neutral btn-icon btn-facebook btn-round btn-lg" rel="tooltip" title="Like us">
+                    <i class="fab fa-facebook-square"></i>
+                    </a>
+                    <a target="_blank" href="https://www.linkedin.com/in/randellhynes" class="btn btn-neutral btn-icon btn-linkedin btn-lg btn-round" rel="tooltip" title="Follow us">
+                    <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a target="_blank" href="https://github.com/hynesip/HappyPlaceMC" class="btn btn-neutral btn-icon btn-github btn-round btn-lg" rel="tooltip" title="Star on Github">
+                    <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
 
   </div>
-
-  <footer class="footer" data-background-color="black">
-      <div class="container">
-          <nav>
-              <ul>
-                  <li>
-                      <a href="http://me.hynes.com">
-                          Hynes Internet Publishing
-                      </a>
-                  </li>
-                  <li>
-                      <a href="http://me.hynes.com/about">
-                          About Us
-                      </a>
-                  </li>
-                  <li>
-                      <a href="http://me.hynes.com/blog">
-                          Blog
-                      </a>
-                  </li>
-              </ul>
-          </nav>
-          <div class="copyright">
-              &copy; 2020 Hynes Internet Publishing
-          </div>
-      </div>
-  </footer>
+  
 </div>

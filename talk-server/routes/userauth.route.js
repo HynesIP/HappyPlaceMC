@@ -58,46 +58,59 @@ router.post("/signin",function(req,res){
     .exec()
     .then(function(user){
         const userObj = user;
-        bcrypt.compare(req.body.password,user.password, function(err,user){
 
-            if(err){
-                return res.status(401).json({
-                    failed: 'Unauthorized Access'    
-                 });
-            }
+console.log(user);
+console.log(typeof user);
 
-            if(user){
-                
-                const JWTtoken = jwt.sign(
-                                            {
-                                                email: user.email,
-                                                _id: user._id
-                                            },
-                                            'secret',
-                                            {
-                                                expiresIn: '2h'
-                                            }
-                                        );
-
-                 return res.status(200).json({
-                    token: JWTtoken,
-                    email: userObj.email,
-                    name: userObj.nickName
-                  });
-                
-            }
+        if(user == null){
             return res.status(500).json({
-                failure:"User not verified!!"
+                failure:"Builder not here."
 
             });
+        } else {
+            bcrypt.compare(req.body.password,user.password, function(err,user){
 
-        });
+                if(err){
+                    return res.status(401).json({
+                        failed: 'Unauthorized Access'    
+                    });
+                }
+
+                if(user){
+                    
+                    const JWTtoken = jwt.sign(
+                                                {
+                                                    email: user.email,
+                                                    _id: user._id
+                                                },
+                                                'secret',
+                                                {
+                                                    expiresIn: '2h'
+                                                }
+                                            );
+
+                    return res.status(200).json({
+                        token: JWTtoken,
+                        email: userObj.email,
+                        name: userObj.nickName
+                    });
+                    
+                }
+                return res.status(500).json({
+                    failure:"User not verified!!"
+
+                });
+
+            });
+        }
+
     })
     .catch((err) => console.log(err));
+
 })
 
 //Token Format
-//Authorization:Bearer<access_token>
+//Authorization:Bearer<account_token>
 //Verify Token
 //It is a middleware function therfore it calls the next to proceed
 function verifyToken(req,res,next)

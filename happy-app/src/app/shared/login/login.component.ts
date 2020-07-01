@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '../../../node_modules/@angular/forms';
+import { FormBuilder } from '../../../../node_modules/@angular/forms';
 import { FormGroup,Validators,FormArray,FormControl } from '@angular/forms';
-import { AuthService } from '../api/services/auth.service';
+import { AuthService } from '../../api/services/auth.service';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-widget-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginWidgetComponent implements OnInit {
 
     data : Date = new Date();
     focus;
@@ -35,14 +35,6 @@ export class LoginComponent implements OnInit {
             password:["",Validators.required]
            })
 
-           /*
-                  var body = document.getElementsByTagName('body')[0];
-                  body.classList.add('login-page');
-
-                  var navbar = document.getElementsByTagName('nav')[0];
-                  navbar.classList.add('navbar-transparent');
-          */
-
     }
     /*
     ngOnDestroy(){
@@ -58,21 +50,28 @@ export class LoginComponent implements OnInit {
         console.log(this.loginForm.value);
       }
     
-      public submit() {
-        sessionStorage.setItem("email",this.loginForm.get("email").value);
-        this.auth.login(this.loginForm.get("email").value, this.loginForm.get('password').value)
-          .pipe(first())
-          .subscribe(
-            result =>{ 
-            this.router.navigateByUrl('/requests')
-            
-            },
-            error=>{
-              this.error_message="Invalid Credentials"
-    
-            });
-            this.navigateToChat()
-      }
+    public loginAccount() {
+      sessionStorage.setItem("email",this.loginForm.get("email").value);
+      this.auth.login(this.loginForm.get("email").value, this.loginForm.get('password').value)
+        .pipe(first())
+        .subscribe(
+          result =>{ 
+            console.log(result);
 
+            location.href = "./requests"
+//            this.router.navigateByUrl('/requests');
+          },
+          error=>{
+            this.error_message="Invalid Credentials"
+          });
+          //this.navigateToChat()
+    }
+
+    checkToken(){
+
+      console.log(this.auth.isTokenExpired())
+      //console.log(this.auth.getTokenExpirationDate())
+
+    }
 
 }

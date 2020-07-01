@@ -3,6 +3,7 @@ import { FormBuilder } from '../../../node_modules/@angular/forms';
 import { FormGroup,Validators,FormArray,FormControl } from '@angular/forms';
 //import { TalkService } from '../api/services/talk.service';
 import { TalkService } from '../api/services';
+import { isNull } from 'util';
 
 @Component({
   selector: 'app-chat',
@@ -23,6 +24,7 @@ export class TalkComponent  {
   count:any;
   userJoined:string;
   roomJoined:string;
+  loggedIn:boolean = (isNull(sessionStorage.getItem("account_token")))? false : true;
 
   //reactive form
   chatForm:FormGroup;

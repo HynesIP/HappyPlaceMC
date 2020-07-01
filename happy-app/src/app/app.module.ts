@@ -5,9 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routing';
-import { SplashModule } from './splash.module';
-import { ExamplesModule } from './examples/examples.module';
+import { UIModule } from './ui.module';
+import { ExamplesModule } from './ui/examples.module';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { LoginWidgetComponent } from './shared/login/login.component';
+import { SignupWidgetComponent } from './shared/signup/signup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -38,13 +41,16 @@ export const API_INTERCEPTOR_PROVIDER: Provider = {
 };
 
 export function tokenGetter() {
-    return sessionStorage.getItem('access_token');
+    return sessionStorage.getItem('account_token');
   }
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarComponent,
+        FooterComponent,
+        LoginWidgetComponent,
+        SignupWidgetComponent,
         TalkComponent,
         LoginComponent,
         SignupComponent,
@@ -58,7 +64,7 @@ export function tokenGetter() {
         FormsModule,
         RouterModule,
         AppRoutingModule,
-        SplashModule,
+        UIModule,
         ExamplesModule,
         HttpClientModule,
         MatFormFieldModule,

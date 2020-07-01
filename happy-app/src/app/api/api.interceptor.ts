@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
   HttpHeaders
 } from '@angular/common/http';
-//import { AuthService } from './auth/auth.service';
+import { AuthService } from '../api/services';
 import { Observable as __Observable, Observable, throwError } from 'rxjs';
 import { ApiConfiguration } from './api-configuration';
 import { map as __map, filter as __filter, catchError, tap, first } from 'rxjs/operators';
@@ -23,13 +23,13 @@ const httpOptions = {
 export class ApiInterceptor implements HttpInterceptor {
 
   credThis: string = "";
+
   constructor(
     public apiConfiguration: ApiConfiguration,
     public config: ApiConfiguration,
     public http: HttpClient,
     public router: Router
   ){}
-
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let apiThis: string = this.apiConfiguration.rootUrl;    

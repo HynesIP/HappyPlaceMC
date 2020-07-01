@@ -2,29 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as jwt_decode from 'jwt-decode';
+import { isNull } from 'util';
+
+export const TOKEN_NAME: string = "account_token";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
- //loggin in for login component 
- login(email: string, password: string){
-    return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
-      .pipe(
-        map(result => {
-          sessionStorage.setItem('access_token', result.token);
-          console.group("Login response.");
-            console.log('access_token');
-            console.log(result);
-          console.groupEnd();
-          
-          return result;
-        })
-      );
+  constructor(private http: HttpClient){}
+  
+  
+  login(email: string, password: string){
+      return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
+        .pipe(
+          map(result => {
+            sessionStorage.setItem('account_token', result.token);
+            console.group("Login response.");
+              console.log('account_token');
+              console.log(result);
+            console.groupEnd();
+            
+            return result;
+          })
+        );
   }
   
-  //signup for the signup component 
   signup(name:string,nickName:string,mobNumber:number,email: string, password: string): Observable<boolean> {
     console.group("Login input.");
       console.log(name);
@@ -43,12 +47,55 @@ export class AuthService {
   }
 
   logout() {
-    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('account_token');
   }
 
   public get loggedIn(): boolean {
-    return (sessionStorage.getItem('access_token') !== null);
+    return (sessionStorage.getItem('account_token') !== null);
   }
   
- 
+
+  getToken(): any {
+
+    let account_token: string = sessionStorage.getItem(TOKEN_NAME);
+
+
+
+    if(isNull(account_token) || account_token == "null"){
+      return false;
+    } else {
+      return account_token;
+    }
+
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem(TOKEN_NAME, token);
+  }
+
+  getTokenExpirationDate(token: string): Date {
+    const decoded = jwt_decode(token);
+
+    if (decoded.exp === undefined) return null;
+
+    const date = new Date(0); 
+    date.setUTCSeconds(decoded.exp);
+    console.log("Date");
+    console.log(date);
+    return date;
+  }
+
+  isTokenExpired(token?: any): boolean {
+    if(!token) token = this.getToken();
+    if(!token) return true;    
+
+console.log(token);
+
+    const date = this.getTokenExpirationDate(token);
+    if(date === undefined) return false;
+    
+    return !(date.valueOf() > new Date().valueOf());
+  }
+
+
 }

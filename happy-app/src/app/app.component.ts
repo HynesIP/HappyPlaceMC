@@ -5,6 +5,7 @@ import 'rxjs/add/operator/filter';
 import { DOCUMENT } from '@angular/common';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { NavbarComponent } from './shared/navbar/navbar.component';
+import { FooterComponent } from './shared/footer/footer.component';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
     
     private _router: Subscription;
     @ViewChild(NavbarComponent) navbar: NavbarComponent;
+    @ViewChild(FooterComponent) footer: FooterComponent;
 
     idleState = 'Not started.';
     timedOut = false;
@@ -43,7 +45,7 @@ export class AppComponent implements OnInit {
                 this.idleState = '';
                 this.timedOut = true;
                 
-                    sessionStorage.setItem("access_token", null);
+                    sessionStorage.setItem("account_token", null);
 
                     this.router.navigateByUrl("/");
 

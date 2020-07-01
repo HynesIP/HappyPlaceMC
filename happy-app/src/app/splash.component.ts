@@ -16,6 +16,7 @@ import {
 import { StripeCheckout, OnetimeCheckoutOptions, RecurringCheckoutOptions } from 'ngx-stripe-checkout';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { MatList } from '@angular/material/list';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-components',
@@ -32,7 +33,8 @@ export class SplashComponent implements OnInit, OnDestroy {
     error: any;
     complete = false;
     element: StripeElement;
-    
+    showCreate: boolean = false;
+
     cardOptions: ElementOptions = {
         iconStyle: "solid",
         style: {
@@ -82,7 +84,8 @@ export class SplashComponent implements OnInit, OnDestroy {
         config: NgbAccordionConfig,
         private _stripe: StripeService,
         public stripe: StripeCheckout,
-        private _bottomSheet: MatBottomSheet
+        private _bottomSheet: MatBottomSheet,
+        private router: Router
         ) {
         config.closeOthers = true;
         config.type = 'info';
@@ -96,45 +99,61 @@ export class SplashComponent implements OnInit, OnDestroy {
     openDiscordDrawer(): void {
       this._bottomSheet.open(HappyPlaceDiscordBottomDrawer);
     }
-    
+
+    openLoginDrawer(): void {
+      this._bottomSheet.open(HappyPlaceLoginBottomDrawer);
+    }
+
     cardUpdated(result) {
         this.element = result.element;
         this.complete = result.card.complete;
         this.error = undefined;
     }
 
-  keyUpdated() {
-    this._stripe.changeKey(this.stripeKey);
-  }
+    keyUpdated() {
+      this._stripe.changeKey(this.stripeKey);
+    }
 
-  getCardToken() {
+    getCardToken() {
 
-    var checkoutOptions: RecurringCheckoutOptions = {
-        items: [{
-          plan: "price_1Gq4dEBgmwEPLtY9FKbHOGIE",
-          quantity: 1
-        }],
-        successUrl: 'http://my.happyplacemc.com/payment/success',
-        cancelUrl: 'http://my.happyplacemc.com/payment/failure'
-      }
-      this.stripe.openRecurringCheckout(checkoutOptions);
+      var checkoutOptions: RecurringCheckoutOptions = {
+          items: [{
+            plan: "price_1Gq4dEBgmwEPLtY9FKbHOGIE",
+            quantity: 1
+          }],
+          successUrl: 'http://my.happyplacemc.com/payment/success',
+          cancelUrl: 'http://my.happyplacemc.com/payment/failure'
+        }
+        this.stripe.openRecurringCheckout(checkoutOptions);
 
-    /*
-    this._stripe.createToken(this.element, {
-      name: 'tested_ca',
-      address_line1: '123 A Place',
-      address_line2: 'Suite 100',
-      address_city: 'Irving',
-      address_state: 'BC',
-      address_zip: 'VOE 1H0',
-      address_country: 'CA'
-    }).subscribe(result => {
-      // Pass token to service for purchase.
-      console.log(result);
-    });
-    */
-  }
+      /*
+      this._stripe.createToken(this.element, {
+        name: 'tested_ca',
+        address_line1: '123 A Place',
+        address_line2: 'Suite 100',
+        address_city: 'Irving',
+        address_state: 'BC',
+        address_zip: 'VOE 1H0',
+        address_country: 'CA'
+      }).subscribe(result => {
+        // Pass token to service for purchase.
+        console.log(result);
+      });
+      */
+    }
     
+    goLogin(): void {
+      this.router.navigate(['/login']);
+    }
+
+    goCreate(): void {
+      this.router.navigate(['/signup']);
+    }
+
+    showCreateCard(): void {
+      this.showCreate = true;
+    }
+
     isWeekend(date: NgbDateStruct) {
         const d = new Date(date.year, date.month - 1, date.day);
         return d.getDay() === 0 || d.getDay() === 6;
@@ -202,5 +221,29 @@ export class HappyPlaceDiscordBottomDrawer {
   }
 
 
+
+}
+
+@Component({
+  selector: 'happy-place-login-bottom-sheet',
+  template: `
+  <div style="text-align: center;height:222px;">
+    <app-widget-login></app-widget-login>
+  </div>
+  `,
+  providers: [
+    MatList
+  ]
+})
+export class HappyPlaceLoginBottomDrawer {
+  constructor(
+      private _bottomSheetRef: MatBottomSheetRef<HappyPlaceLoginBottomDrawer>,
+      public matList: MatList
+    ) {}
+
+  openLink(event: MouseEvent): void {
+    this._bottomSheetRef.dismiss();
+    event.preventDefault();
+  }
 
 }

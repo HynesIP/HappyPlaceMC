@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '../../../node_modules/@angular/forms';
-import { FormGroup,Validators,FormArray,FormControl } from '@angular/forms';
-//import { TalkService } from '../api/services/talk.service';
+import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { TalkService } from '../api/services';
 import { isNull } from 'util';
+import { ApiConfiguration } from '../api/api-configuration'
 
 @Component({
   selector: 'app-chat',
@@ -15,14 +15,14 @@ export class TalkComponent  {
   
   onlineUser:any=[]
   u:string;
-  roomsForChat:any=['Angular','React','Vue']
-  joined:any=false;
-  messageArray:Array<{user:String,message:String}> = [];
-  
+  roomsForChat:any=['Subscription Plot','Community','Contest'];
+  build_type_unselected: boolean = true;
+  request_unstarted: boolean = true;
+  messageArray:Array<{user:String,message:String}> = [];  
   join_message:string;
   leave_message:string;
   count:any;
-  userJoined:string;
+  userJoined:string = this.config.userName;
   roomJoined:string;
   loggedIn:boolean = (isNull(sessionStorage.getItem("account_token")))? false : true;
 
@@ -31,7 +31,8 @@ export class TalkComponent  {
 
   constructor(
       private _chatService:TalkService,
-      private fb:FormBuilder
+      private fb:FormBuilder,
+      public config: ApiConfiguration
     ){
       this._chatService.newUserJoined()
       .subscribe(data=> this.messageArray.push(data));
@@ -46,17 +47,23 @@ export class TalkComponent  {
       .subscribe((data)=>{
         this.count=data.count
       });
+
     }
 
+  userName: string = this.config.userName;
+
   join(){
-    this.joined=true
+    console.log("Request Started")
+    this.build_type_unselected = true;
+    this.request_unstarted = false;
     this.leave_message=null
     this.join_message="You have joined the room " +this.roomJoined
     this._chatService.joinRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
   }
 
   leave(){
-    this.joined=false;
+    this.build_type_unselected = false;
+    this.request_unstarted = true;
     this.join_message=null
     this.leave_message="You have  left the room "+this.roomJoined
     this._chatService.leaveRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
@@ -69,6 +76,8 @@ export class TalkComponent  {
   userInfo;
 
   ngOnInit() { 
+
+    console.log(this.userName);
     this.userInfo=history.state;
     this.u=this.userInfo.email;
     this.chatForm=this.fb.group({
@@ -76,18 +85,40 @@ export class TalkComponent  {
      room:["",Validators.required],
      messageText:[""]
     })
+
+    console.log(this.chatForm);
+
+    this.chatForm.patchValue({ "user": this.userName });
+
+    console.log(this.chatForm);
+
+    this.chatForm
+    .valueChanges
+    .subscribe(value => {      
+
+      console.log(value);
+      if(typeof value.room != "undefined" && value.room != ""){
+        this.build_type_unselected = false;
+      }
+
+    });
   }
 
   // Choose room using select dropdown
-  changeRoom(e) {
-    console.log(e.value)
+  changeRoom(e: any) {
+    console.log(e.value);
+    console.log("Jello")
     this.room.setValue(e.target.value, {
       onlySelf: true
     })
   }
+
   get room() {
     return this.chatForm.get('room');
   }
+
+
+
   //to get list of online users
   getOnlineUsers(){
 

@@ -1,13 +1,12 @@
 <div class="page-header-widget" filter-color="purple">
-    
-<div class="page-header-widget" filter-color="">
   <div class="container">
-      <div class="col-md-12 content-center" style="padding-bottom: 88px;">
-              <form (ngSubmit)="createAccount()" *ngIf="!success_flag; else successLabel">
+      <div class="col-md-12 content-center" style="padding: 125px 0px;">
+        
+        <div *ngIf="!success_flag; else successLabel">
+
+              <form (ngSubmit)="createAccount()" >
                   <div class="header header-primary text-center">
-                      <div class="logo-container">
-                          <img src="assets/img/HappyPlace.png" alt="">
-                      </div>
+                      &nbsp;
                   </div>
                   <div class="content-center">
                     <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus===true}">
@@ -52,10 +51,29 @@
                 </div>
                    
               </form>
+              <!--Happy Place is a Minecraft server we've been building on for three years. Lots to see.<br/>
+              <br/>
+              Start in Creative mode. Walk, fly and roller coaster anywhere.
+              
+              <h4>Create a My Happy Place account below to earn access to maps and features.</h4>
+              <ul style="list-style: none;">
+              <li>Login to server map.</li>
+              <li>Chat with us and other builders.</li>
+              <li>Get access to our Blog.</li>
+              <li>Compete in build competitions.</li>
+              <li>Required to complete any Builder Subsciption.</li>
+              </ul>
+              <br/>                
+              <h2>
+                Builder Subscription
+                </h2>
+                <h4>Get subscription build access to one 256 block plot on our Minecraft 1.12 server My.HappyPlaceMC.com — Only $1.99 monthly with 7 day trial.</h4>
+                <h4>Upgrading to Minecraft 1.15.2 soon!</h4-->   
+        </div>
 
-              <ng-template #successLabel>
-                  <div>Account Created. Login, if you please.</div>
-              </ng-template>
+        <ng-template #successLabel>
+            <div>Explorer Account Created. Login to Explorer, if you please.</div>
+        </ng-template>
+
       </div>
   </div>
-</div>

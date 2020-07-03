@@ -10,18 +10,22 @@
               </ng-template>     
               <div *ngIf="loggedIn;else login">
                 <form [formGroup]="chatForm">
-                  <input matInput type="text" [(ngModel)]="userJoined" formControlName="user" required id="username" placeholder="Enter username">
+                  <input readonly matInput type="text" [(ngModel)]="userJoined" formControlName="user" required id="username">
                   <mat-form-field  >
-                    <mat-select formControlName="room"  [(ngModel)]="roomJoined" required (change)="changeRoom($event)" placeholder="Select Room">
-                        <mat-option *ngFor="let room of roomsForChat" [value]="room">
-                          {{room}}
-                      </mat-option>
+                      <mat-select formControlName="room"  [(ngModel)]="roomJoined" required (change)="changeRoom($event)" placeholder="Select Build Type">
+                          <mat-option *ngFor="let room of roomsForChat" [value]="room">
+                              {{room}}
+                          </mat-option>
                       </mat-select>
                   </mat-form-field>
-                  <button mat-raised-button color="primary" (click)="join()" [disabled]="joined" >Join Room</button>&nbsp;&nbsp;
-                  <button mat-raised-button color="accent" (click)="leave()" >Leave Room</button>  
+                  <br />
+                  <button mat-raised-button color="primary" (click)="join()" [disabled]="build_type_unselected" >Start Request</button>&nbsp;&nbsp;
+                  <button mat-raised-button color="accent" (click)="leave()" [disabled]="request_unstarted">Done</button>  
                 </form>
-                  <form [formGroup]="chatForm">
+
+
+
+                  <!--form [formGroup]="chatForm">
                     <div class="row">
                         <div class="col-md-6">
         
@@ -33,17 +37,14 @@
                                   <mat-card-content>
                                     <h6 style="color:indigo"></h6>
                                     <h6 style="color:indigo">Join any room</h6>
-                                    <!--UserName-->
                                     <mat-form-field>
                                           <input matInput type="text" [(ngModel)]="userJoined" formControlName="user" required id="username" placeholder="Enter username">
                                     </mat-form-field><br>
-                                        <!--display error message -->
                                   <span *ngIf="chatForm.get('user').dirty || chatForm.get('user').touched">
                                       <span *ngIf="chatForm.get('user').errors?.required" class="text text-danger" id="userError">User is required</span>
                                     </span> 
                                     <br>
                                     <br>
-                                  <!--Select Room-->
                                     <mat-form-field  >
                                         <mat-select formControlName="room"  [(ngModel)]="roomJoined" required (change)="changeRoom($event)" placeholder="Select Room">
                                           <mat-option *ngFor="let room of roomsForChat" [value]="room">
@@ -51,7 +52,6 @@
                                         </mat-option>
                                         </mat-select>
                                     </mat-form-field><br>
-                                  <!--display error message -->
                                   <span *ngIf="chatForm.get('room').dirty || chatForm.get('room').touched">
                                     <span *ngIf="chatForm.get('room').errors?.required" class="text text-danger" id="roomError">Room is required</span>
                                   </span> 
@@ -104,7 +104,7 @@
                               </div>
                         
                       </div>
-                  </form>
+                  </form-->
               </div>                       
           </div>
       </div>

@@ -9,11 +9,12 @@ export class TalkService{
     joinRoom(data){
         this.socket.emit('join',data);
     }
+
     leaveRoom(data){
         this.socket.emit('leave',data)
     }
-    newUserJoined()
-    {
+
+    newUserJoined() {
         let observable = new Observable<{user:String, message:String,count:String}>(observer=>{
             this.socket.on('new user joined', (data)=>{
                 observer.next(data);
@@ -23,6 +24,7 @@ export class TalkService{
 
         return observable;
     }
+
     userLeftRoom(){
         let observable = new Observable<{user:String,message:String}>(observer=>{
             this.socket.on('left room',(data)=>{
@@ -34,10 +36,13 @@ export class TalkService{
         return observable;
 
     }
+
     sendMessage(data){
-       this.socket.emit('message',data)
+        
+        this.socket.emit('message',data)
 
     }
+
     newMessageReceived(){
         let observable = new Observable<{user:String,message:String}>(observer=>{
             this.socket.on('new message',(data)=>{
@@ -48,14 +53,14 @@ export class TalkService{
  
         return observable;
     }
-  //getting total number of users 
-  totalUsers(){
-     let observable = new Observable<{count:string}>(observer=>{
-         this.socket.on('usercount',(data)=>{
-             observer.next(data);
-         });
-         return () => {this.socket.disconnect();}
-     });
+  
+    totalUsers(){
+        let observable = new Observable<{count:string}>(observer=>{
+            this.socket.on('usercount',(data)=>{
+                observer.next(data);
+            });
+            return () => {this.socket.disconnect();}
+        });
      return observable;
 
   }

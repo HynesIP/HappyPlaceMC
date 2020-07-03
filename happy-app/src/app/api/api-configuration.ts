@@ -11,14 +11,16 @@ import { Router } from '@angular/router';
 
 export class ApiConfiguration {
   constructor(public router: Router ) {}
-  rootUrl: string = '/vcdus01'; 
+
+  rootUrl: string = 'mongo'; 
   targetShape: any = [];
   targetData: any = [];
   targetName: string = "";
   sessionInit: boolean = false;
   loading: boolean = false;
   pageviewInit: boolean = false;
-  //(this.router.url == "/link")?'/vcd' : (this.router.url == "/workflows")?'/vco' : '/catalog-service';
+  userName: string = "Termon8";
+
 }
 
 export interface ApiConfigurationInterface {

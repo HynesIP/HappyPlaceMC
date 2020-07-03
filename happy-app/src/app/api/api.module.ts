@@ -3,9 +3,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationInterface } from './api-configuration';
 
-//import { CatalogService } from './services/catalog.service';
-//import { ApiService } from ''./services/api.service';'
-
 /*
  * Provider for all Api services, plus ApiConfiguration
  */
@@ -27,8 +24,7 @@ export class ApiModule {
       ngModule: ApiModule,
       providers: [
         {
-          provide: ApiConfiguration,
-          useValue: {rootUrl: customParams.rootUrl}
+          provide: ApiConfiguration
         }
       ]
     }

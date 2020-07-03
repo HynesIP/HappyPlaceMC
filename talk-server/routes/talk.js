@@ -12,28 +12,28 @@ io.origins('*:*');
 var users=0;
 
 io.on('connection',function(socket){
-    console.log("Builder connected");
+    console.log("Request server connected");
 
     socket.on('disconnect',function(socket){
-        console.log("Builder disconnected")
+        console.log("Request server disconnected")
     })
 
     //join room
     socket.on('join',function(data){
  
         //Display the number of Builders in room 
-        users+=1
+        users+= (users < 0) ? 0 : 1;
         console.log(users)
-        io.sockets.emit('Builder count',{count:users +' players joined '});
+        io.sockets.emit('Builder count',{count:users +' builders joined '});
         //end
 
         // user joining the particular room
         socket.join(data.room)
       
-        console.log(data.user + ' joined the room:' +data.room)
+        console.log(data.user + ' started a ' +data.room +' build request.' )
 
        //inform other on the room about event
-       socket.broadcast.to(data.room).emit('New builder joined',{user:data.user,message:" has joined this room "});
+       socket.broadcast.to(data.room).emit('Builder started a request',{user:data.user,message:" has started a build request. "});
       
 
     });
@@ -46,15 +46,15 @@ io.on('connection',function(socket){
         console.log(users)
         //end
 
-        console.log(data.user + "has left the room " +data.room)
-        socket.broadcast.to(data.room).emit('Left room',{user:data.user,message:"has left the room "});
+        console.log(data.user + " is done with " +data.room+ " build request.")
+        socket.broadcast.to(data.room).emit('Done with build request',{user:data.user,message:" is done with a build request. "});
         socket.leave(data.room)
         
     })
 
     //sending message
     socket.on('message',function(data){
-        io.in(data.room).emit('new message',{user:data.user,message:data.message})
+        io.in(data.room).emit('new request',{user:data.user,message:data.message})
     })
 
     

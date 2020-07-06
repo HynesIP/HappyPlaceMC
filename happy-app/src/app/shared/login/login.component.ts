@@ -15,6 +15,7 @@ export class LoginWidgetComponent implements OnInit {
     data : Date = new Date();
     focus;
     focus1;
+    showCreate: boolean = false;
 
     public error_message: string;
     public u :string;
@@ -50,6 +51,11 @@ export class LoginWidgetComponent implements OnInit {
         console.log(this.loginForm.value);
       }
     
+
+      showCreateCard(): void {
+        this.showCreate = true;
+      }
+
     public loginAccount() {
       sessionStorage.setItem("email",this.loginForm.get("email").value);
       this.auth.login(this.loginForm.get("email").value, this.loginForm.get('password').value)
@@ -65,6 +71,13 @@ export class LoginWidgetComponent implements OnInit {
             this.error_message="Invalid Credentials"
           });
           //this.navigateToChat()
+    }
+
+    pressAccount(e: any){
+      console.log(e);
+      if(e.key == "Enter"){
+        this.loginAccount();
+      }
     }
 
     checkToken(){

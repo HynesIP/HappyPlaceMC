@@ -42,15 +42,16 @@
                         <li>No Mobs.</li>
                         <li>Always Sunny.</li>
                         <li>Family Run.</li>
-                        <li>Creative Mode.</li>
-                        <li>No PVP — Player versus Player.</li>
+                        <li>Always Creative Mode.</li>
+                        <li>No Player versus Player.</li>
                         <li>Lots to Explore for Free.</li>
                         <li>Miles and Miles of Rollercoasters.</li>
                         <li>Scheduled Build Competitions.</li>
-                        <li>This Continuously Growing Site Guide.</li>
-                        <li>No Griefing.</li>
-                        <li>Subscriber Plots & Build Requests.</li>
+                        <li>Happy Talk Blog to learn about build opportunities.</li>
+                        <li>All builds are protected from breaking.</li>
+                        <li>Build requests by subscription, open competitions or community space.</li>
                         <li>Earn Trusted Access.</li>
+                        <li style="font-weight: bold;">Build Kind.</li>
                     </ul>
                     <!-- --> 
                         <ngx-stripe-card class="hidden" [options]="cardOptions" [elementsOptions]="elementsOptions" (change)="cardUpdated($event)" (error)="error = $event"></ngx-stripe-card>
@@ -133,21 +134,7 @@
     <div class="section section-social-media" data-background-color="purple">
         <app-widget-login></app-widget-login>
 
-        <div *ngIf="showCreate">
-            <app-widget-signup></app-widget-signup>
-        </div>
 
-        <div class="container" >
-            <div class="row justify-content-md-center sharing-area text-center">
-                <div class="text-center col-md-12 col-lg-8">
-                    <button type="button" class="btn btn-info" (click)="showCreateCard()" >Get Free Explorer Account</button>  
-                    <button type="button" class="btn btn-info" [routerLink]="['/login']" class="hidden">Login</button>
-                    <button type="button" class="btn btn-info" (click)="getCardToken()">Subscribe</button>  
-                    <button type="button" class="btn btn-info" (click)="openDiscordDrawer()" class="hidden">Discord</button>  
-                    <button type="button" class="btn btn-info" (click)="openLoginDrawer()" class="hidden">Login</button> 
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="row justify-content-md-center sharing-area text-center">
                 <div class="text-center col-md-12 col-lg-8">

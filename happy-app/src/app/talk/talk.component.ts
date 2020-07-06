@@ -3,7 +3,8 @@ import { FormBuilder } from '../../../node_modules/@angular/forms';
 import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { TalkService } from '../api/services';
 import { isNull } from 'util';
-import { ApiConfiguration } from '../api/api-configuration'
+import { ApiConfiguration } from '../api/api-configuration';
+
 
 @Component({
   selector: 'app-chat',
@@ -22,7 +23,7 @@ export class TalkComponent  {
   join_message:string;
   leave_message:string;
   count:any;
-  userJoined:string = this.config.userName;
+  userJoined:string = JSON.parse(sessionStorage.getItem("user")).name;
   roomJoined:string;
   loggedIn:boolean = (isNull(sessionStorage.getItem("account_token")))? false : true;
 
@@ -32,7 +33,7 @@ export class TalkComponent  {
   constructor(
       private _chatService:TalkService,
       private fb:FormBuilder,
-      public config: ApiConfiguration
+      public apiConfiguration: ApiConfiguration
     ){
       this._chatService.newUserJoined()
       .subscribe(data=> this.messageArray.push(data));
@@ -48,16 +49,19 @@ export class TalkComponent  {
         this.count=data.count
       });
 
+
+      
     }
 
-  userName: string = this.config.userName;
+    user = JSON.parse(sessionStorage.getItem("user"));
+    userName: string = this.user["name"];
 
   join(){
     console.log("Request Started")
     this.build_type_unselected = true;
     this.request_unstarted = false;
     this.leave_message=null
-    this.join_message="You have joined the room " +this.roomJoined
+    this.join_message="You have started a " +this.roomJoined +" request."
     this._chatService.joinRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
   }
 
@@ -65,19 +69,24 @@ export class TalkComponent  {
     this.build_type_unselected = false;
     this.request_unstarted = true;
     this.join_message=null
-    this.leave_message="You have  left the room "+this.roomJoined
+    this.leave_message="You are done with a "+this.roomJoined +" request."
     this._chatService.leaveRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
   }
     
   sendMessage(){
-    this._chatService.sendMessage({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value,message:this.chatForm.get('messageText').value});
+    console.log("Send")
+    console.log(this.chatForm.get('user').value)
+    console.log(this.chatForm.get('room').value)    
+    console.log(this.chatForm.get('messageText').value) 
+        this._chatService.sendMessage({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value,message:this.chatForm.get('messageText').value});
   }
 
   userInfo;
 
   ngOnInit() { 
 
-    console.log(this.userName);
+    //this.chatForm.patchValue({ "user": JSON.parse(sessionStorage.getItem("user")).name });
+    
     this.userInfo=history.state;
     this.u=this.userInfo.email;
     this.chatForm=this.fb.group({
@@ -86,27 +95,36 @@ export class TalkComponent  {
      messageText:[""]
     })
 
-    console.log(this.chatForm);
-
-    this.chatForm.patchValue({ "user": this.userName });
-
-    console.log(this.chatForm);
-
     this.chatForm
-    .valueChanges
-    .subscribe(value => {      
+      .valueChanges
+      .subscribe(value => {  
+        console.log(value);
+        
 
-      console.log(value);
-      if(typeof value.room != "undefined" && value.room != ""){
-        this.build_type_unselected = false;
-      }
+        if(typeof value.room != "undefined" && value.room != ""){
+          this.build_type_unselected = false;
+        }
+        /*
+        this.chatForm.patchValue({ "room": value.room },  {
+          onlySelf: true
+        });
+        */
 
-    });
+        /*
+        room.setValue(value.room, {
+          onlySelf: true
+        })
+        */
+
+      });
+    
+    
   }
 
   // Choose room using select dropdown
+  
   changeRoom(e: any) {
-    console.log(e.value);
+    console.log(e);
     console.log("Jello")
     this.room.setValue(e.target.value, {
       onlySelf: true
@@ -116,7 +134,7 @@ export class TalkComponent  {
   get room() {
     return this.chatForm.get('room');
   }
-
+  
 
 
   //to get list of online users

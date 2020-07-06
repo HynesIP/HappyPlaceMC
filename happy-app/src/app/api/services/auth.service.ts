@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 import { isNull } from 'util';
+import { ApiConfiguration } from '../api-configuration' ;
+import { config } from 'process';
 
 export const TOKEN_NAME: string = "account_token";
 
@@ -11,17 +13,45 @@ export const TOKEN_NAME: string = "account_token";
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient){}
+  constructor(
+      private http: HttpClient,
+      public apiConfiguration: ApiConfiguration
+    ){}
   
+  checkname(nickName: string){
+    return this.http.post('http://localhost:8082/api/checkName',{nickName: nickName})
+    .pipe(
+      map(result => {        
+        return result;
+      })
+    );   
+  }
   
+  getprofile(){
+    return this.http.post<{}>('http://localhost:8082/api/getProfile',{})
+    .pipe(
+      map(result => {        
+        return result;
+      })
+    );   
+  }
+
+
+
   login(email: string, password: string){
       return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
         .pipe(
           map(result => {
             sessionStorage.setItem('account_token', result.token);
+            sessionStorage.setItem('user', JSON.stringify(result));
             console.group("Login response.");
               console.log('account_token');
               console.log(result);
+              console.log(result["name"]);
+
+              this.apiConfiguration["user"] = result;
+
+              console.log(this.apiConfiguration["user"])
             console.groupEnd();
             
             return result;
@@ -29,15 +59,14 @@ export class AuthService {
         );
   }
   
-  signup(name:string,nickName:string,mobNumber:number,email: string, password: string): Observable<boolean> {
-    console.group("Login input.");
+  signup(name:string,nickName:string,uuid: string,email: string, password: string): Observable<boolean> {
+    console.group("Signup input.");
       console.log(name);
       console.log(nickName);
-      console.log(mobNumber);
       console.log(email);
     console.groupEnd();
     sessionStorage.setItem("email",email);
-    return this.http.post('http://localhost:8082/api/signup', {name:name,nickName:nickName,mobNumber:mobNumber,email:email, password: password})
+    return this.http.post('http://localhost:8082/api/signup', {name:name,nickName:nickName,uuid:uuid,email:email, password: password})
       .pipe(
         map(result => {
           console.log("User created successfully");

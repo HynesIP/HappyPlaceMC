@@ -1,8 +1,6 @@
-<div class="page-header-widget" filter-color="purple">
+<div class="page-header-widget" filter-color="purple" *ngIf="!success_flag; else successLabel" >
   <div class="container">
       <div class="col-md-12 content-center" style="padding: 125px 0px;">
-        
-        <div *ngIf="!success_flag; else successLabel">
 
               <form (ngSubmit)="createAccount()" >
                   <div class="header header-primary text-center">
@@ -30,12 +28,12 @@
                     <input placeholder="Email"  [(ngModel)]="email" name="email" class="email" class="form-control" (focus)="focus=true" (blur)="focus=false" >
                     </div>
                     
-                    <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
+                    <!--div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="now-ui-icons text_caps-small"></i></span>
                         </div>
-                        <input placeholder="Phone"  [(ngModel)]="mobNumber" name="mobNumber" class="mobNumber" class="form-control" (focus)="focus=true" (blur)="focus=false" >
-                    </div>
+                        <input placeholder="Phone"  [(ngModel)]="mobNumber" name="uuid" class="mobNumber" class="form-control" (focus)="focus=true" (blur)="focus=false" >
+                    </div-->
 
                     <div class="input-group form-group-no-border input-lg" [ngClass]="{'input-group-focus':focus1===true}">
                         <div class="input-group-prepend">
@@ -69,11 +67,12 @@
                 </h2>
                 <h4>Get subscription build access to one 256 block plot on our Minecraft 1.12 server My.HappyPlaceMC.com — Only $1.99 monthly with 7 day trial.</h4>
                 <h4>Upgrading to Minecraft 1.15.2 soon!</h4-->   
-        </div>
-
-        <ng-template #successLabel>
-            <div>Explorer Account Created. Login to Explorer, if you please.</div>
-        </ng-template>
 
       </div>
+
+    </div>
   </div>
+    <ng-template #successLabel>
+        <app-widget-login></app-widget-login>
+        <div style="padding: 22px;margin-top: -44px;">Explorer Account Created. Login to Explorer, if you please.</div>
+    </ng-template>

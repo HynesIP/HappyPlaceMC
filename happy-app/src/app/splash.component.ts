@@ -33,7 +33,6 @@ export class SplashComponent implements OnInit, OnDestroy {
     error: any;
     complete = false;
     element: StripeElement;
-    showCreate: boolean = false;
 
     cardOptions: ElementOptions = {
         iconStyle: "solid",
@@ -148,10 +147,6 @@ export class SplashComponent implements OnInit, OnDestroy {
 
     goCreate(): void {
       this.router.navigate(['/signup']);
-    }
-
-    showCreateCard(): void {
-      this.showCreate = true;
     }
 
     isWeekend(date: NgbDateStruct) {

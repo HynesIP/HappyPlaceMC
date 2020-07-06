@@ -45,8 +45,8 @@ export class AppComponent implements OnInit {
                 this.idleState = '';
                 this.timedOut = true;
                 
-                    sessionStorage.setItem("account_token", null);
-
+                    sessionStorage.removeItem("account_token");
+                    sessionStorage.removeItem("user");
                     this.router.navigateByUrl("/");
 
             });

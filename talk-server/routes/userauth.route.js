@@ -5,6 +5,7 @@ var jwt = require("jsonwebtoken");
 var jwt_decode = require('jwt-decode');
 var router = express.Router();
 var User = require("../models/userauth.model");
+const MinecraftAPI = require('minecraft-api');
 
 router.get('/protectedRoute',verifyToken,function(req,res){
     var decoded = jwt_decode(req.token);
@@ -22,13 +23,44 @@ router.get('/protectedRoute',verifyToken,function(req,res){
     });
 });
 
+router.post('/checkName',function(req,res){
+    console.log("Check Minecraft Name");
+    console.log(req.body);
+    MinecraftAPI.uuidForName(req.body.nickName)
+        .then(uuid => {
+            console.log("UUID");
+            console.log(uuid);
+
+            if(uuid == "undefined"){
+                return res.status(200).json({"UUID": "undefined"});
+            } else {
+                return res.status(200).json({"UUID":uuid});
+            }
+
+        })
+        .catch(err => console.log(err));
+});
+
+router.post('/getProfile',function(req,res){
+    console.log("Minecraft");
+    MinecraftAPI.profileForUuid('f7242cb3b50240e6ac9b2ed26d6fc786')
+        .then(uuid => {
+            console.log(uuid);
+            console.log("UUID");
+
+            return res.status(200).json({"Profile":uuid});
+
+        })
+        .catch(err => console.log(err));
+});
+
 //Route for Builder signup
 router.post('/signup',function(req,res){
     console.log("Inside route")
     var _id= new  mongoose.Types.ObjectId();
     var name = req.body.name;
     var nickName=req.body.nickName;
-    var mobNumber= req.body.mobNumber;
+    var uuid= req.body.uuid;
     var email = req.body.email;
     var password = req.body.password;
 
@@ -36,11 +68,9 @@ router.post('/signup',function(req,res){
         _id:_id,
         name:name,
         nickName:nickName,
-        mobNumber:mobNumber,
+        uuid:uuid,
         email:email,
         password:bcrypt.hashSync(password,bcrypt.genSaltSync(10))
-
-
     },function(err,user){
         if(err){
             console.log(err);
@@ -133,4 +163,5 @@ function verifyToken(req,res,next)
 		}
 
 }
+
 module.exports=router;

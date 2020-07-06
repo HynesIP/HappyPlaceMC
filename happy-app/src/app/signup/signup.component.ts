@@ -11,11 +11,10 @@ import { first } from 'rxjs/operators';
 export class SignupComponent  {
 
   public email: string;
-  public mobNumber: number;
+  public uuid: string;
   public password: string;
   public name: string;
   public nickName: string;
-
 
   public error: string;
   public success_message:string;
@@ -28,14 +27,14 @@ export class SignupComponent  {
   public submit() {
     console.log("Sign up called");
 
-    this.auth.signup(this.name,this.nickName,this.mobNumber,this.email, this.password)
+    this.auth.signup(this.name,this.nickName,this.uuid,this.email, this.password)
       .pipe(first())
       .subscribe(
         result =>{
           this.success_message="User Created Successfully"
           this.email=null;
           this.password=null;
-          this.mobNumber=null;
+          this.uuid=null;
           this.name=null;
           this.nickName=null;
         } ,

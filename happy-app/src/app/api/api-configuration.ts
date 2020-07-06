@@ -10,7 +10,9 @@ import { Router } from '@angular/router';
 })
 
 export class ApiConfiguration {
-  constructor(public router: Router ) {}
+  constructor(
+      public router: Router 
+    ) {}
 
   rootUrl: string = 'mongo'; 
   targetShape: any = [];
@@ -19,7 +21,6 @@ export class ApiConfiguration {
   sessionInit: boolean = false;
   loading: boolean = false;
   pageviewInit: boolean = false;
-  userName: string = "Termon8";
 
 }
 

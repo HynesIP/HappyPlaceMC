@@ -77,6 +77,7 @@ export class NavbarComponent implements OnInit {
 
     logOut() {
         sessionStorage.removeItem("account_token");
+        sessionStorage.removeItem("user");
         this.router.navigateByUrl("/home");
     }
 }

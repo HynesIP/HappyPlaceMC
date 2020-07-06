@@ -4,27 +4,23 @@ mongoose.set('useCreateIndex', true);
 
 var signupSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-
     name:{
         type:String,
         required:true
     },
-   nickName:{
-        
-        type:String,
-        required:true
-
-   },
-   mobNumber:{
-    type:Number,
-    required:true
-   },
-
-  email:{
+    nickName:{
         type:String,
         required:true
     },
-  password:{
+    uuid:{
+        type:String,
+        required:false
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    password:{
         
      type:String,
      required:true

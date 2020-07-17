@@ -55,7 +55,7 @@ export class SignupWidgetComponent  {
           .pipe(first())
           .subscribe(
             result =>{
-              this.success_message="Explorer Account Created";
+              this.success_message="Explorer Account created";
               this.success_flag = true;
               this.email=null;
               this.password=null;

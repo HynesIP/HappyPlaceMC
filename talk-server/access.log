@@ -193,3 +193,8 @@
 ::1 - - [06/Jul/2020:14:11:10 +0000] "POST /api/checkName HTTP/1.1" 200 43 "http://localhost:8081/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 ::1 - - [06/Jul/2020:14:11:11 +0000] "POST /api/signup HTTP/1.1" 200 38 "http://localhost:8081/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 ::1 - - [06/Jul/2020:14:11:23 +0000] "POST /api/signin HTTP/1.1" 200 185 "http://localhost:8081/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::1 - - [06/Jul/2020:16:14:38 +0000] "POST /api/signin HTTP/1.1" 200 183 "http://localhost:8081/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::1 - - [06/Jul/2020:16:52:17 +0000] "POST /api/signin HTTP/1.1" 200 183 "http://localhost:8081/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::1 - - [06/Jul/2020:18:54:54 +0000] "POST /api/signin HTTP/1.1" 200 183 "http://localhost:8081/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::1 - - [06/Jul/2020:20:47:14 +0000] "POST /api/signin HTTP/1.1" 200 183 "http://localhost:8081/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::1 - - [06/Jul/2020:22:37:07 +0000] "POST /api/signin HTTP/1.1" 200 183 "http://localhost:8081/home" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"

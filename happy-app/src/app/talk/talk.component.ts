@@ -4,7 +4,8 @@ import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { TalkService } from '../api/services';
 import { isNull } from 'util';
 import { ApiConfiguration } from '../api/api-configuration';
-
+import { AuthService } from '../api/services';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ export class TalkComponent  {
   
   onlineUser:any=[]
   u:string;
-  roomsForChat:any=['Subscription Plot','Community','Contest'];
+  roomsForChat:any=['Subscription Plot','Community','Contest', 'Wilderness Area'];
   build_type_unselected: boolean = true;
   request_unstarted: boolean = true;
   messageArray:Array<{user:String,message:String}> = [];  
@@ -29,11 +30,13 @@ export class TalkComponent  {
 
   //reactive form
   chatForm:FormGroup;
+  requestForm: FormGroup;
 
   constructor(
       private _chatService:TalkService,
       private fb:FormBuilder,
-      public apiConfiguration: ApiConfiguration
+      public apiConfiguration: ApiConfiguration,
+      public auth: AuthService
     ){
       this._chatService.newUserJoined()
       .subscribe(data=> this.messageArray.push(data));
@@ -48,9 +51,6 @@ export class TalkComponent  {
       .subscribe((data)=>{
         this.count=data.count
       });
-
-
-      
     }
 
     user = JSON.parse(sessionStorage.getItem("user"));
@@ -61,7 +61,7 @@ export class TalkComponent  {
     this.build_type_unselected = true;
     this.request_unstarted = false;
     this.leave_message=null
-    this.join_message="You have started a " +this.roomJoined +" request."
+    this.join_message= this.roomJoined +" request started. "
     this._chatService.joinRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
   }
 
@@ -73,6 +73,10 @@ export class TalkComponent  {
     this._chatService.leaveRoom({user:this.chatForm.get('user').value,room:this.chatForm.get('room').value});
   }
     
+  talk(path: string){
+    window.open("https://talk.happyplacemc.com"+path, "_happytalk");
+  }
+
   sendMessage(){
     console.log("Send")
     console.log(this.chatForm.get('user').value)
@@ -100,6 +104,8 @@ export class TalkComponent  {
       .subscribe(value => {  
         console.log(value);
         
+        this.category = value.room;
+        this.uuid = JSON.parse(sessionStorage.getItem("user")).uuid;
 
         if(typeof value.room != "undefined" && value.room != ""){
           this.build_type_unselected = false;
@@ -118,6 +124,11 @@ export class TalkComponent  {
 
       });
     
+    this.requestForm=this.fb.group({
+      article:[""],
+      description:["",Validators.required],
+      coords:["",Validators.required]
+      });      
     
   }
 
@@ -135,12 +146,36 @@ export class TalkComponent  {
     return this.chatForm.get('room');
   }
   
-
-
   //to get list of online users
   getOnlineUsers(){
 
   }
 
+  public category: string;
+  public article: string;
+  public description: string;
+  public coords: string;
+  public uuid: string;
+
+  public createRequest() {
+
+          this.auth.bequest(this.category,this.article,this.description,this.coords,this.uuid)
+          .pipe(first())
+          .subscribe(
+            result =>{
+              this.category=null;
+              this.article=null;
+              this.description=null;
+              this.coords=null;
+              this.coords=null;
+            } ,
+            err => {
+              console.log(err.message)
+              //this.error_message = 'Explorer Account not created, '+err.message;
+            }
+          );
+          }
+
+      
 
 }

@@ -57,6 +57,7 @@
     "socket.io": "^2.3.0",
     "stripe-angular": "^1.1.0",
     "tslib": "1.11.1",
+    "wp-api-angular": "^3.0.0-beta8",
     "zone.js": "0.10.2"
   },
   "devDependencies": {

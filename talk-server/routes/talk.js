@@ -23,6 +23,9 @@ io.on('connection',function(socket){
  
         //Display the number of Builders in room 
         users+=1
+        if(users<0){
+            users = 0;
+        }
         console.log(users)
         io.sockets.emit('Builder count',{count:users +' players joined '});
         //end

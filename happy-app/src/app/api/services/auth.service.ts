@@ -36,8 +36,6 @@ export class AuthService {
     );   
   }
 
-
-
   login(email: string, password: string){
       return this.http.post<{token: string}>('http://localhost:8082/api/signin', {email:email, password: password})
         .pipe(
@@ -126,5 +124,22 @@ console.log(token);
     return !(date.valueOf() > new Date().valueOf());
   }
 
+  bequest(category:string,article:string,description:string,coords:string,uuid:string): Observable<boolean> {
+    console.group("Bequest input.");
+      console.log(category);
+      console.log(article);
+      console.log(description);
+      console.log(coords);
+      console.log(uuid);
+    console.groupEnd();
+    
+    return this.http.post('http://localhost:8082/api/bequest', {category:category,article:article,description:description,coords:coords, uuid: uuid})
+      .pipe(
+        map(result => {
+          console.log("Bequest created successfully.");
+          return true;
+        })
+      );
+  }
 
 }
